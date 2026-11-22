@@ -33,6 +33,7 @@ git show preinregistrare-v1 --stat
 | `scripts/analyze.py` | Analiza statistică preînregistrată și raportul |
 | `scripts/status.py` | Progresul pe sesiuni și următoarea comandă |
 | `EVALUARE_UMANA.md` | Instrucțiuni pentru evaluatorii umani (opțional) |
+| `AUDIT.md` | Auditul pre-execuție: întrebări și reguli de oprire |
 | `data/` | Datele brute (după experiment) |
 | `results/` | Raportul final (după experiment) |
 
