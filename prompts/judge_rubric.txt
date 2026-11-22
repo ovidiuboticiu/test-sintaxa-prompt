@@ -1,0 +1,17 @@
+Ești evaluator. Mai jos ai o cerere și un răspuns scris de un model de limbaj.
+Notează ORIGINALITATEA răspunsului, de la 1 la 5:
+
+1 = banal, previzibil, formulări și idei foarte des întâlnite
+2 = în mare parte convențional, cu puține elemente proprii
+3 = moderat original: câteva idei sau formulări mai puțin obișnuite
+4 = original: idei sau imagini neașteptate, dar potrivite cererii
+5 = foarte original și memorabil, fără să se abată de la cerere
+
+Evaluează doar originalitatea, nu lungimea și nu corectitudinea gramaticală.
+Răspunde DOAR cu o singură cifră între 1 și 5, fără alte cuvinte.
+
+CEREREA:
+{task}
+
+RĂSPUNSUL:
+{response}

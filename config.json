@@ -1,0 +1,15 @@
+{
+  "base_url": "http://localhost:1234/v1",
+  "generator": {
+    "model": "gemma-4-e4b-it",
+    "temperature": 0.8,
+    "top_p": 0.95,
+    "max_tokens": 1500
+  },
+  "judges": [
+    {"model": "qwen3.5-9b", "temperature": 0.0, "max_tokens": 2048, "rol": "principal"}
+  ],
+  "runs_per_cell": 20,
+  "master_seed": 20261122,
+  "request_timeout_s": 900
+}

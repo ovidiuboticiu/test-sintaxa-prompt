@@ -1,0 +1,6 @@
+{
+  "A": {"prefix": "", "descriere": "Referință: cererea simplă"},
+  "B": {"prefix": "//Dev_Lab_Op_Mode --creative", "descriere": "Sintaxa testată"},
+  "C": {"prefix": "Răspunde cât mai creativ.", "descriere": "Aceeași intenție, în cuvinte obișnuite"},
+  "D": {"prefix": "//Zq_Rt_Op_Mode --creative", "descriere": "Placebo: aceeași formă, mod inventat"}
+}
