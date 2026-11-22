@@ -31,6 +31,7 @@ git show preinregistrare-v1 --stat
 | `scripts/judge.py` | Evaluarea oarbă automată a originalității |
 | `scripts/make_blind_sheet.py` | Tabel pentru evaluare umană oarbă (opțional) |
 | `scripts/analyze.py` | Analiza statistică preînregistrată și raportul |
+| `scripts/status.py` | Progresul pe sesiuni și următoarea comandă |
 | `data/` | Datele brute (după experiment) |
 | `results/` | Raportul final (după experiment) |
 
@@ -59,14 +60,28 @@ Scripturile folosesc doar biblioteca standard Python (3.9+); nu trebuie instalat
    ```
 6. Rezultatul e în `results/raport.md`.
 
-**Durată:** pe un laptop fără placă video dedicată, cele 800 de generări și cele 1.600 de evaluări pot dura între 10 și 15 ore, în funcție de procesor și de modele. Se pot împărți pe mai multe sesiuni:
+### Rulare pe sesiuni
+
+Pe un laptop fără placă video dedicată, cele 800 de generări și cele 1.600 de evaluări pot dura între 10 și 15 ore. Nu trebuie făcute dintr-o dată. La începutul fiecărei sesiuni rulezi:
 
 ```
-python scripts/run_experiment.py --model gemma-4-e4b-it
-python scripts/judge.py --judge qwen3.5-9b
+python scripts/status.py
 ```
 
-Orice comandă întreruptă și pornită din nou continuă de unde a rămas.
+Scriptul arată ce s-a terminat, cât a mai rămas (estimat din timpii de până atunci) și **comanda exactă de rulat în continuare**. O sesiune tipică acoperă un model generator (aprox. 1,5–3 ore) sau o parte dintr-un evaluator. Ordinea:
+
+| Sesiune | Comandă |
+|---|---|
+| 1 | `python scripts/run_experiment.py --model microsoft_phi-4-mini-instruct` |
+| 2 | `python scripts/run_experiment.py --model ministral-3-8b-instruct-2512` |
+| 3 | `python scripts/run_experiment.py --model granite-4.1-8b` |
+| 4 | `python scripts/run_experiment.py --model gemma-4-e4b-it` |
+| 5 | `python scripts/run_experiment.py --model qwen3-4b-instruct-2507` |
+| 6–7 | `python scripts/judge.py --judge qwen3.5-9b` |
+| 8–9 | `python scripts/judge.py --judge gemma-4-12b-it` |
+| final | `python scripts/analyze.py` |
+
+Poți opri oricând cu **Ctrl+C**. Răspunsul aflat în lucru se pierde, iar la repornire se reface; tot ce era gata rămâne salvat.
 
 Pe Windows, dacă `python` nu e recunoscut, folosește `py` în loc. În PowerShell, un clic în fereastră pune rularea pe pauză (QuickEdit); apasă o tastă ca să continue.
 

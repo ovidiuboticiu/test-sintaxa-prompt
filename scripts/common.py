@@ -34,18 +34,31 @@ def read_jsonl(path):
         return []
     rows = []
     with open(path, encoding="utf-8") as f:
-        for line in f:
+        for n, line in enumerate(f, 1):
             line = line.strip()
-            if line:
+            if not line:
+                continue
+            try:
                 rows.append(json.loads(line))
+            except json.JSONDecodeError:
+                # O linie incompletă (oprire bruscă în timpul scrierii) e ignorată; rularea se reface.
+                print(f"  ! linia {n} din {path.name} e incompletă și a fost ignorată")
     return rows
 
 
 def append_jsonl(path, row):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    needs_newline = False
+    if path.exists() and path.stat().st_size > 0:
+        with open(path, "rb") as f:
+            f.seek(-1, 2)
+            needs_newline = f.read(1) != b"\n"  # după o oprire bruscă, ultima linie poate fi neterminată
     with open(path, "a", encoding="utf-8") as f:
+        if needs_newline:
+            f.write("\n")
         f.write(json.dumps(row, ensure_ascii=False) + "\n")
+        f.flush()
 
 
 def build_message(prefix, task_text):

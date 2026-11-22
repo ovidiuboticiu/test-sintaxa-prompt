@@ -32,6 +32,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pilot", action="store_true")
     ap.add_argument("--judge", help="rulează doar acest evaluator")
+    ap.add_argument("--force", action="store_true", help="evaluează chiar dacă generarea nu e completă (se notează la Abateri)")
     args = ap.parse_args()
 
     cfg = load_config()
@@ -41,6 +42,10 @@ def main():
     runs = read_jsonl(DATA / ("pilot.jsonl" if args.pilot else "runs.jsonl"))
     if not runs:
         raise SystemExit("Nu există răspunsuri de evaluat. Rulează întâi run_experiment.py.")
+    expected = len(cfg["generators"]) * 4 * 2 * cfg["runs_per_cell"]
+    if not args.pilot and not args.force and len(runs) < expected:
+        raise SystemExit(f"Generarea nu e completă ({len(runs)}/{expected}). Conform protocolului, "
+                         "evaluarea începe după ce toate răspunsurile sunt generate. Vezi scripts/status.py.")
 
     judges = [j for j in cfg["judges"] if not args.judge or j["model"] == args.judge]
     if not judges:
