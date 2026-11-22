@@ -18,13 +18,17 @@ scrise la începutul unei sesiuni noi, controlează comportamentul unui model de
 
 Testul privește **doar exemplul de mai sus**, așa cum a fost dat public. Nu poate spune nimic despre alte „sintaxe” nepublicate.
 
+**Domeniul testului:** efectul liniei asupra unor modele care nu au nicio configurare care să o definească (fără system prompt, fără instrucțiuni personalizate, fără o aplicație care să o interpreteze). Testul nu poate exclude ca linia să aibă o semnificație într-o aplicație anume sau în instrucțiuni personalizate care o definesc.
+
 ## 2. Context: ce se știe deja
 
 - Modelele de limbaj sunt sensibile la forma promptului, chiar când conținutul e același. Schimbări mici de formatare (separatori, spații, majuscule) au produs diferențe de până la 76 de puncte de acuratețe la LLaMA-2-13B, iar formatul „bun” diferă de la un model la altul (Sclar et al., *Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design*, ICLR 2024, arXiv:2310.11324).
 - Aceeași cerere scrisă ca text simplu, Markdown, YAML sau JSON a dus la diferențe de până la 40% la GPT-3.5-turbo; modelele mai mari au fost mai stabile (He et al., *Does Prompt Formatting Have Any Impact on LLM Performance?*, arXiv:2411.10541, 2024).
 - Instrucțiunile scrise ca pseudo-cod au îmbunătățit performanța la unele sarcini (Mishra et al., *Prompting with Pseudo-Code Instructions*, EMNLP 2023).
 
-Aceste studii reformatează **toată** cererea, păstrând conținutul. Nu am găsit un test al unei linii-comandă de tip „mod” comparată cu un placebo. Consecința pentru acest experiment: o diferență între B și A, luată singură, poate fi doar sensibilitate obișnuită la formă. Doar o diferență între B și placebo-ul D ar indica ceva specific sintaxei testate.
+Pentru sintaxa testată nu am găsit o documentație publică. Afirmații despre linii de tip comandă care ar activa „moduri” speciale circulă însă în comunități online; ele documentează existența afirmațiilor, nu validitatea lor.
+
+Studiile de mai sus reformatează **toată** cererea, păstrând conținutul. Nu am găsit un test al unei linii-comandă de tip „mod” comparată cu un placebo. Consecința pentru acest experiment: o diferență între B și A, luată singură, poate fi doar sensibilitate obișnuită la formă. Doar o diferență între B și placebo-ul D ar indica ceva specific sintaxei testate.
 
 ## 3. Condiții
 
@@ -151,7 +155,8 @@ Limitele interpretării:
 - „Creativitatea” e măsurată indirect: prin varietatea numelor și prin evaluatori automați, care au propriile preferințe. Scorurile evaluatorilor automați nu au fost validate față de evaluatori umani; P1 (diversitatea numelor) nu depinde de niciun evaluator.
 - Sarcinile sunt în limba română; unele modele mici o stăpânesc mai slab. Comparațiile se fac însă în interiorul aceluiași model, deci asta afectează toate condițiile la fel.
 - 20 de rulări pe combinație și model pot detecta, pe un model luat separat, doar efecte moderate sau mari. Analiza combinată are mai multă putere.
-- Testul acoperă doar sintaxa dată ca exemplu public.
+- Testul acoperă doar sintaxa dată ca exemplu public, aplicată unor modele fără nicio configurare care să o definească (§1).
+- Un model poate „confirma” singur că a intrat într-un mod (de exemplu „Mod creativ activat!”). O astfel de confirmare nu e o dovadă; contează doar ce se măsoară în răspunsuri.
 - Un răspuns poate repeta singur comanda și astfel își poate dezvălui condiția în fața evaluatorului; riscul e măsurat prin analiza de sensibilitate (§7).
 - Dacă evaluarea e întreruptă și reluată, răspunsurile rămase sunt amestecate din nou, deci ordinea în care le vede evaluatorul diferă de cea dintr-o rulare continuă. Fiecare evaluare rămâne independentă și oarbă.
 

@@ -10,6 +10,16 @@ scrisă la începutul unei sesiuni noi, schimbă comportamentul unui model de li
 
 Experimentul compară patru variante ale aceleiași cereri: fără nimic, cu sintaxa testată, cu aceeași intenție scrisă în cuvinte și cu o sintaxă placebo (aceeași formă, dar un „mod” inventat). Testul se face pe cinci modele mici din familii diferite (Gemma, Qwen, Mistral, Granite, Phi), cu 800 de răspunsuri notate orb de doi evaluatori automați. Detaliile sunt în **[PROTOCOL.md](PROTOCOL.md)**.
 
+## Ce testează și ce nu testează
+
+Experimentul verifică dacă linia `//Dev_Lab_Op_Mode --creative`, scrisă la începutul unei conversații, schimbă răspunsurile unor modele care nu au nicio configurare care să o definească, și dacă efectul diferă de cel al unei instrucțiuni obișnuite sau al unei linii placebo de aceeași formă.
+
+Experimentul nu poate verifica dacă linia are o semnificație într-o aplicație anume sau în instrucțiuni personalizate care o definesc. Pentru această sintaxă nu am găsit o documentație publică.
+
+Faptul că un text schimbă răspunsul unui model nu înseamnă că el activează un mod de funcționare diferit. Orice linie adăugată la un prompt poate schimba răspunsul; de aceea experimentul compară sintaxa cu o linie placebo de aceeași formă.
+
+Afirmații despre linii de tip comandă care ar activa „moduri” speciale ale modelelor (de exemplu `/DEV MODE` sau „Developer Mode”) circulă și în comunități online internaționale ([exemplu](https://www.reddit.com/r/ChatGPTPromptGenius/comments/1pg4b1v/)). Ele documentează existența afirmațiilor, nu validitatea lor; de aceea au nevoie de un test controlat.
+
 ## De ce „preînregistrat”
 
 Ipotezele, măsurătorile, testele statistice și regulile de interpretare au fost scrise **înainte** de a colecta datele și salvate în commit-ul cu eticheta `preinregistrare-v1`. Astfel, nimeni (nici autorul) nu poate potrivi concluziile după rezultate. Regulile sunt simetrice: un rezultat favorabil și unul nefavorabil sunt tratate cu același prag.
