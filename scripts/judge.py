@@ -76,6 +76,13 @@ def main():
                                    "score": None, "status": "esuat", "error": str(e)})
                 print(f"  [{i}/{len(todo)}] EȘUAT DEFINITIV: {e}")
                 continue
+            det = (res.get("usage") or {}).get("completion_tokens_details") or {}
+            reasoning = det.get("reasoning_tokens") or res.get("reasoning_chars") or 0
+            if reasoning:
+                # PROTOCOL.md §5: evaluatorii rulează fără raționament intern. Nu se salvează nimic.
+                raise SystemExit(f"\nOprit: evaluatorul {judge['model']} a produs raționament intern ({reasoning}). "
+                                 "În LM Studio, cu modelul încărcat, dezactivează „Enable Thinking”, "
+                                 "apoi reia aceeași comandă. Evaluarea aceasta nu a fost salvată.")
             score = parse_score(res["text"])
             append_jsonl(out, {
                 "run_id": r["run_id"],
@@ -84,6 +91,7 @@ def main():
                 "status": "ok" if score is not None else "invalid",
                 "judge_text": res["text"][:200],
                 "finish_reason": res["finish_reason"],
+                "reasoning": 0,
             })
             print(f"  [{i}/{len(todo)}] scor={score if score is not None else 'INVALID'}")
     print("Gata.")
