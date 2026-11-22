@@ -8,7 +8,7 @@ Un experiment mic, reproductibil, care verifică o afirmație întâlnită în d
 
 scrisă la începutul unei sesiuni noi, schimbă comportamentul unui model de limbaj mai bine decât o instrucțiune obișnuită, în cuvinte.
 
-Experimentul compară patru variante ale aceleiași cereri: fără nimic, cu sintaxa testată, cu aceeași intenție scrisă în cuvinte și cu o sintaxă placebo (aceeași formă, dar un „mod” inventat). Detaliile sunt în **[PROTOCOL.md](PROTOCOL.md)**.
+Experimentul compară patru variante ale aceleiași cereri: fără nimic, cu sintaxa testată, cu aceeași intenție scrisă în cuvinte și cu o sintaxă placebo (aceeași formă, dar un „mod” inventat). Testul se face pe cinci modele mici din familii diferite (Gemma, Qwen, Mistral, Granite, Phi), cu 800 de răspunsuri notate orb de doi evaluatori automați. Detaliile sunt în **[PROTOCOL.md](PROTOCOL.md)**.
 
 ## De ce „preînregistrat”
 
@@ -59,8 +59,17 @@ Scripturile folosesc doar biblioteca standard Python (3.9+); nu trebuie instalat
    ```
 6. Rezultatul e în `results/raport.md`.
 
-Pe Windows, dacă `python` nu e recunoscut, folosește `py` în loc.
+**Durată:** pe un laptop fără placă video dedicată, cele 800 de generări și cele 1.600 de evaluări pot dura între 10 și 15 ore, în funcție de procesor și de modele. Se pot împărți pe mai multe sesiuni:
+
+```
+python scripts/run_experiment.py --model gemma-4-e4b-it
+python scripts/judge.py --judge qwen3.5-9b
+```
+
+Orice comandă întreruptă și pornită din nou continuă de unde a rămas.
+
+Pe Windows, dacă `python` nu e recunoscut, folosește `py` în loc. În PowerShell, un clic în fereastră pune rularea pe pauză (QuickEdit); apasă o tastă ca să continue.
 
 ## Limite
 
-Un singur model mic, o singură sintaxă testată, „creativitatea” măsurată indirect. Lista completă e în PROTOCOL.md, secțiunea 9.
+Modele mici rulate local, o singură sintaxă testată, „creativitatea” măsurată indirect. Lista completă e în PROTOCOL.md, secțiunea 9.

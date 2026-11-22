@@ -114,6 +114,11 @@ def list_models(base_url):
     return [m.get("id") for m in body.get("data", [])]
 
 
+def safe_name(model):
+    """Numele modelului, sigur pentru fișiere și identificatori."""
+    return re.sub(r"[^\w.-]", "_", model)
+
+
 def normalize(s):
     """Litere mici, fără diacritice, fără punctuație, spații simple."""
     s = unicodedata.normalize("NFKD", s)

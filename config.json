@@ -1,13 +1,20 @@
 {
   "base_url": "http://localhost:1234/v1",
-  "generator": {
-    "model": "gemma-4-e4b-it",
+  "generators": [
+    {"model": "gemma-4-e4b-it", "familie": "Google Gemma"},
+    {"model": "qwen3-4b-instruct-2507", "familie": "Alibaba Qwen"},
+    {"model": "ministral-3-8b-instruct-2512", "familie": "Mistral"},
+    {"model": "granite-4.1-8b", "familie": "IBM Granite"},
+    {"model": "microsoft_phi-4-mini-instruct", "familie": "Microsoft Phi"}
+  ],
+  "generation_params": {
     "temperature": 0.8,
     "top_p": 0.95,
     "max_tokens": 1500
   },
   "judges": [
-    {"model": "qwen3.5-9b", "temperature": 0.0, "max_tokens": 2048, "rol": "principal"}
+    {"model": "qwen3.5-9b", "temperature": 0.0, "max_tokens": 2048},
+    {"model": "gemma-4-12b-it", "temperature": 0.0, "max_tokens": 2048}
   ],
   "runs_per_cell": 20,
   "master_seed": 20261122,

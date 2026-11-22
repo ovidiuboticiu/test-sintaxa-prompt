@@ -6,6 +6,7 @@ Creează:
 
 Fișierele se deschid direct în Excel (UTF-8 cu BOM, separator „;”).
 """
+import argparse
 import csv
 import random
 
@@ -13,6 +14,9 @@ from common import DATA, RESULTS, ROOT, load_config, load_json, read_jsonl
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--n", type=int, default=0, help="doar un eșantion aleator de N răspunsuri (0 = toate)")
+    args = ap.parse_args()
     cfg = load_config()
     tasks = load_json(ROOT / "prompts" / "tasks.json")
     runs = read_jsonl(DATA / "runs.jsonl")
@@ -25,6 +29,8 @@ def main():
 
     rows = list(runs)
     random.Random(cfg["master_seed"] + 13).shuffle(rows)
+    if args.n:
+        rows = rows[: args.n]
     RESULTS.mkdir(exist_ok=True)
 
     with open(sheet, "w", encoding="utf-8-sig", newline="") as f, \
