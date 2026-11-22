@@ -84,7 +84,7 @@ Setările sunt în `config.json`; valorile efectiv folosite sunt salvate cu fiec
 - **Scorul folosit în analiza principală** e media celor doi evaluatori. Dacă un evaluator nu dă un scor valid, se folosește scorul celuilalt; numărul acestor cazuri se raportează.
 - Fiecare evaluator face parte din aceeași familie cu unul dintre generatoare (Qwen, Gemma), ceea ce poate crea o preferință pentru „propriile” texte. Media celor doi și analiza de sensibilitate pe fiecare evaluator separat (secțiunea 7) arată dacă asta schimbă concluzia. Preferința ar afecta oricum în mod egal toate cele patru condiții ale aceluiași model.
 - Dacă la pilot un evaluator produce raționament intern foarte lung, raționamentul se dezactivează din setările LM Studio înainte de etichetă, iar decizia se notează în „Abateri”.
-- **Evaluare umană (opțională, secundară):** `make_blind_sheet.py` produce un tabel cu răspunsuri amestecate și fără etichete (toate sau un eșantion aleator); cheia e într-un fișier separat, deschis doar după notare.
+- **Evaluare umană:** nu face parte din această versiune a experimentului. Autorul cunoaște ipotezele și nu are la dispoziție evaluatori independenți. Datele brute sunt publice, iar `make_blind_sheet.py` și `EVALUARE_UMANA.md` permit oricui o evaluare umană oarbă ulterioară, raportată separat.
 
 **Risc de „dezvăluire”:** un răspuns poate menționa singur comanda (de exemplu „Mod creativ activat!”), ceea ce ar putea influența evaluatorul. Răspunsurile **nu** sunt modificate. Se raportează câte răspunsuri menționează comanda și se face o analiză de sensibilitate fără ele. La T1, liniile de acest tip nu sunt numărate ca nume.
 
@@ -105,7 +105,6 @@ Setările sunt în `config.json`; valorile efectiv folosite sunt salvate cu fiec
 - Diversitatea lexicală la T2 (distinct-2: proporția perechilor de cuvinte unice).
 - Acordul dintre cei doi evaluatori.
 - Numărul de răspunsuri care menționează comanda și numărul de răspunsuri trunchiate.
-- Scorurile evaluatorilor umani, dacă există.
 
 ## 7. Analiza statistică
 
@@ -140,7 +139,7 @@ Orice concluzie se însoțește de numărul de modele la care diferența a mers 
 ## 9. Limite cunoscute
 
 - Cinci modele mici (4–8 miliarde de parametri), rulate local. Literatura (secțiunea 2) arată că efectele de formă diferă de la un model la altul, deci rezultatul nu se transferă automat la modele mari sau la servicii online.
-- „Creativitatea” e măsurată indirect: prin varietatea numelor și prin evaluatori automați, care au propriile preferințe.
+- „Creativitatea” e măsurată indirect: prin varietatea numelor și prin evaluatori automați, care au propriile preferințe. Scorurile evaluatorilor automați nu au fost validate față de evaluatori umani; P1 (diversitatea numelor) nu depinde de niciun evaluator.
 - Sarcinile sunt în limba română; unele modele mici o stăpânesc mai slab. Comparațiile se fac însă în interiorul aceluiași model, deci asta afectează toate condițiile la fel.
 - 20 de rulări pe combinație și model pot detecta, pe un model luat separat, doar efecte moderate sau mari. Analiza combinată are mai multă putere.
 - Testul acoperă doar sintaxa dată ca exemplu public.

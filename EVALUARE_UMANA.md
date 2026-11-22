@@ -1,6 +1,6 @@
 # Instrucțiuni pentru evaluatorul uman
 
-Evaluarea umană e **opțională și secundară**: nu schimbă verdictul experimentului, dar arată dacă oamenii văd aceleași diferențe ca evaluatorii automați.
+Evaluarea umană **nu face parte din experimentul inițial** și nu schimbă verdictul lui. Oricine o poate face ulterior pe datele publicate, ca să verifice dacă oamenii văd aceleași diferențe ca evaluatorii automați. Rezultatele se raportează separat.
 
 ## Ce primești
 
