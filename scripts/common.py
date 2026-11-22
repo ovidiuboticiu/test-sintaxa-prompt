@@ -79,7 +79,7 @@ def strip_thinking(text):
 
 
 def chat(base_url, model, message, temperature, top_p=None, max_tokens=1500,
-         seed=None, timeout=900, retries=3):
+         seed=None, timeout=900, retries=3, top_k=None, repeat_penalty=None):
     """Trimite o conversație nouă, cu un singur mesaj de utilizator, fără system prompt."""
     payload = {
         "model": model,
@@ -92,6 +92,11 @@ def chat(base_url, model, message, temperature, top_p=None, max_tokens=1500,
         payload["top_p"] = top_p
     if seed is not None:
         payload["seed"] = seed
+    # Trimise explicit ca să nu depindem de setările implicite ale fiecărui model din LM Studio.
+    if top_k is not None:
+        payload["top_k"] = top_k
+    if repeat_penalty is not None:
+        payload["repeat_penalty"] = repeat_penalty
     data = json.dumps(payload).encode("utf-8")
     last_err = None
     for attempt in range(1, retries + 1):
@@ -106,7 +111,9 @@ def chat(base_url, model, message, temperature, top_p=None, max_tokens=1500,
                 body = json.loads(resp.read().decode("utf-8"))
             choice = body["choices"][0]
             raw = choice["message"].get("content") or ""
+            reasoning = choice["message"].get("reasoning_content") or choice["message"].get("reasoning") or ""
             return {
+                "reasoning_chars": len(reasoning) + (len(raw) - len(strip_thinking(raw))),
                 "raw_text": raw,
                 "text": strip_thinking(raw),
                 "finish_reason": choice.get("finish_reason"),

@@ -102,7 +102,8 @@ def main():
             res = chat(cfg["base_url"], p["model"], message,
                        temperature=params["temperature"], top_p=params["top_p"],
                        max_tokens=params["max_tokens"], seed=p["seed"],
-                       timeout=cfg["request_timeout_s"])
+                       timeout=cfg["request_timeout_s"],
+                       top_k=params.get("top_k"), repeat_penalty=params.get("repeat_penalty"))
         except RuntimeError as e:
             if not server_alive(cfg["base_url"]):
                 raise SystemExit("\nServerul LM Studio nu mai răspunde. Oprit fără a marca vreun eșec; "

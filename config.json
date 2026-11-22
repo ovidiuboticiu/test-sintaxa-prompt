@@ -10,6 +10,8 @@
   "generation_params": {
     "temperature": 0.8,
     "top_p": 0.95,
+    "top_k": 40,
+    "repeat_penalty": 1.1,
     "max_tokens": 1500
   },
   "judges": [
