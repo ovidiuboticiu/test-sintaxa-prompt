@@ -32,6 +32,7 @@ git show preinregistrare-v1 --stat
 | `scripts/make_blind_sheet.py` | Tabel pentru evaluare umană oarbă (opțional) |
 | `scripts/analyze.py` | Analiza statistică preînregistrată și raportul |
 | `scripts/status.py` | Progresul pe sesiuni și următoarea comandă |
+| `EVALUARE_UMANA.md` | Instrucțiuni pentru evaluatorii umani (opțional) |
 | `data/` | Datele brute (după experiment) |
 | `results/` | Raportul final (după experiment) |
 
