@@ -13,14 +13,15 @@ import argparse
 import random
 import re
 
-from common import (DATA, ROOT, append_jsonl, chat, load_config, load_json,
-                    read_jsonl, safe_name)
+from common import (DATA, ROOT, append_jsonl, chat, is_ok, load_config, load_json,
+                    read_jsonl, safe_name, server_alive)
 
-SCORE_RE = re.compile(r"(?<!\d)([1-5])(?!\d)")
+# Protocol §5: e valid doar un răspuns format dintr-o singură cifră 1–5 (eventual urmată de punct).
+SCORE_RE = re.compile(r"\s*([1-5])\s*\.?\s*")
 
 
 def parse_score(text):
-    m = SCORE_RE.search(text or "")
+    m = SCORE_RE.fullmatch(text or "")
     return int(m.group(1)) if m else None
 
 
@@ -32,20 +33,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pilot", action="store_true")
     ap.add_argument("--judge", help="rulează doar acest evaluator")
-    ap.add_argument("--force", action="store_true", help="evaluează chiar dacă generarea nu e completă (se notează la Abateri)")
+    ap.add_argument("--force", action="store_true",
+                    help="evaluează chiar dacă generarea nu e terminată (se notează la Abateri)")
     args = ap.parse_args()
 
     cfg = load_config()
     tasks = load_json(ROOT / "prompts" / "tasks.json")
     rubric = (ROOT / "prompts" / "judge_rubric.txt").read_text(encoding="utf-8")
 
-    runs = read_jsonl(DATA / ("pilot.jsonl" if args.pilot else "runs.jsonl"))
-    if not runs:
+    rows = read_jsonl(DATA / ("pilot.jsonl" if args.pilot else "runs.jsonl"))
+    if not rows:
         raise SystemExit("Nu există răspunsuri de evaluat. Rulează întâi run_experiment.py.")
     expected = len(cfg["generators"]) * 4 * 2 * cfg["runs_per_cell"]
-    if not args.pilot and not args.force and len(runs) < expected:
-        raise SystemExit(f"Generarea nu e completă ({len(runs)}/{expected}). Conform protocolului, "
-                         "evaluarea începe după ce toate răspunsurile sunt generate. Vezi scripts/status.py.")
+    terminal = {r["run_id"] for r in rows}
+    if not args.pilot and not args.force and len(terminal) < expected:
+        raise SystemExit(f"Generarea nu e terminată ({len(terminal)}/{expected} rulări încheiate). Conform "
+                         "protocolului, evaluarea începe după ce toate rulările sunt încheiate. Vezi scripts/status.py.")
+    runs = [r for r in rows if is_ok(r)]  # se evaluează doar generările reușite
 
     judges = [j for j in cfg["judges"] if not args.judge or j["model"] == args.judge]
     if not judges:
@@ -65,17 +69,23 @@ def main():
                            temperature=judge["temperature"], max_tokens=judge["max_tokens"],
                            seed=0, timeout=cfg["request_timeout_s"])
             except RuntimeError as e:
-                print(f"  [{i}/{len(todo)}] EȘUAT: {e}")
+                if not server_alive(cfg["base_url"]):
+                    raise SystemExit("\nServerul LM Studio nu mai răspunde. Oprit fără a marca vreun eșec; "
+                                     "pornește din nou serverul și reia aceeași comandă.")
+                append_jsonl(out, {"run_id": r["run_id"], "judge_model": judge["model"],
+                                   "score": None, "status": "esuat", "error": str(e)})
+                print(f"  [{i}/{len(todo)}] EȘUAT DEFINITIV: {e}")
                 continue
             score = parse_score(res["text"])
             append_jsonl(out, {
                 "run_id": r["run_id"],
                 "judge_model": judge["model"],
                 "score": score,
+                "status": "ok" if score is not None else "invalid",
                 "judge_text": res["text"][:200],
                 "finish_reason": res["finish_reason"],
             })
-            print(f"  [{i}/{len(todo)}] scor={score}")
+            print(f"  [{i}/{len(todo)}] scor={score if score is not None else 'INVALID'}")
     print("Gata.")
 
 

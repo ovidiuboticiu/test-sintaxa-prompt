@@ -75,12 +75,15 @@ Modelele cu raționament explicit („reasoning”, „thinking”) au fost excl
 
 Setările sunt în `config.json`; valorile efectiv folosite sunt salvate cu fiecare rulare.
 
+- **Identificarea exactă a modelelor:** după pilot și înainte de etichetă, `scripts/model_fingerprints.py` înregistrează în `MODELE.md`, pentru fiecare model generator și evaluator, fișierul GGUF folosit (calea din LM Studio, care indică sursa) și suma lui SHA-256.
+- **Rulări eșuate:** o cerere care eșuează de 3 ori consecutiv, cu serverul pornit, e înregistrată ca **eșuată definitiv** și nu se mai reîncearcă la reluare. Dacă serverul nu răspunde, scriptul se oprește fără să marcheze eșecuri. Evaluarea pornește doar când toate cele 800 de rulări sunt încheiate (reușite sau eșuate definitiv) și se aplică doar celor reușite.
+
 ## 5. Evaluare oarbă
 
 - **Evaluatori automați:** două modele diferite de toate modelele generatoare, din familii diferite: `qwen3.5-9b` și `gemma-4-12b-it` (Q4_K_M), cu temperatură 0.
 - Evaluatorul primește **doar** cererea (identică în toate condițiile) și răspunsul. Nu primește prima linie a mesajului, condiția sau modelul care a generat răspunsul.
 - Fiecare evaluator vede răspunsurile într-o ordine aleatoare proprie.
-- Scor: originalitate de la 1 la 5, după grila din `prompts/judge_rubric.txt`.
+- Scor: originalitate de la 1 la 5, după grila din `prompts/judge_rubric.txt`. **E valid doar un răspuns format dintr-o singură cifră între 1 și 5** (eventual urmată de punct), după eliminarea spațiilor și a raționamentului intern. Orice alt răspuns e înregistrat ca **invalid** și nu se reîncearcă.
 - **Scorul folosit în analiza principală** e media celor doi evaluatori. Dacă un evaluator nu dă un scor valid, se folosește scorul celuilalt; numărul acestor cazuri se raportează.
 - Fiecare evaluator face parte din aceeași familie cu unul dintre generatoare (Qwen, Gemma), ceea ce poate crea o preferință pentru „propriile” texte. Media celor doi și analiza de sensibilitate pe fiecare evaluator separat (secțiunea 7) arată dacă asta schimbă concluzia. Preferința ar afecta oricum în mod egal toate cele patru condiții ale aceluiași model.
 - Dacă la pilot un evaluator produce raționament intern foarte lung, raționamentul se dezactivează din setările LM Studio înainte de etichetă, iar decizia se notează în „Abateri”.
@@ -92,7 +95,7 @@ Setările sunt în `config.json`; valorile efectiv folosite sunt salvate cu fiec
 
 ### Primare (stabilite dinainte; doar ele decid verdictul)
 
-- **P1 — diversitatea numelor (T1):** proporția de nume unice din toate numele produse de un model într-o condiție (după normalizare: litere mici, fără diacritice, fără numerotare și punctuație). Mai mare = mai variat.
+- **P1 — diversitatea numelor (T1):** proporția de nume unice din toate numele produse de un model într-o condiție (după normalizare: litere mici, fără diacritice, fără numerotare și punctuație). Mai mare = mai variat. **Extragerea numelor:** (1) se ignoră liniile care menționează comanda sau un „mod activat”; (2) dacă răspunsul conține linii numerotate sau cu buline, se folosesc **doar** acestea; (3) altfel se folosesc toate liniile, mai puțin cele terminate în „:”, „!” sau „?” (formule introductive); (4) dintr-o linie se păstrează doar partea dinaintea unei descrieri („ – …”, „: …”, „(…)”); liniile mai lungi de 8 cuvinte sau 60 de caractere nu sunt nume.
 - **P2 — originalitatea textului (T2):** scorul mediu dat de evaluatori.
 
 ### Secundare (descriptive; nu decid verdictul)
@@ -108,33 +111,39 @@ Setările sunt în `config.json`; valorile efectiv folosite sunt salvate cu fiec
 
 ## 7. Analiza statistică
 
-- **Analiza principală combină cele cinci modele.** Pentru fiecare comparație se calculează diferența dintre condiții în interiorul fiecărui model, apoi media acestor diferențe peste modele.
+- **Perechi.** O pereche e formată din două răspunsuri ale aceluiași model, la aceeași sarcină și aceeași repetiție (deci cu același seed), în două condiții diferite. Toate comparațiile se fac pe perechi.
+- **Perechi incomplete.** O pereche intră în analiză doar dacă ambele răspunsuri există și au valoarea necesară (pentru P2: cel puțin un scor valid fiecare). Numărul perechilor excluse se raportează pentru fiecare comparație.
+- **Analiza principală combină cele cinci modele.** Pentru fiecare comparație se calculează diferența dintre condiții în fiecare model, apoi media acestor diferențe peste modele.
 - **Comparații:** B față de A, B față de C, B față de D, pentru fiecare rezultat primar → 6 teste.
-- **Test:** test de permutare bilateral, **stratificat pe model** (etichetele condițiilor se amestecă doar între răspunsurile aceluiași model), 10.000 de permutări, seed fix.
+- **Test:** test de permutare bilateral **pe perechi**: în fiecare pereche, cele două etichete se schimbă între ele cu probabilitatea 1/2, independent, în toate modelele; statistica se recalculează integral. 10.000 de permutări, seed fix. O permutare la care statistica nu e definită se numără ca extremă (conservator).
 - **Corecție pentru comparații multiple:** Holm, pe cele 6 teste. Prag: p ajustat < 0,05.
-- **Mărimea efectului:** diferența medie, cu interval de încredere 95% prin bootstrap stratificat (5.000 de reeșantionări).
+- **Mărimea efectului:** diferența medie. Pentru P2 se raportează și intervalul de încredere 95% prin bootstrap pe perechi (5.000 de reeșantionări, în fiecare model). **Pentru P1 nu se raportează interval de încredere**: reeșantionarea duplică liste întregi și ar subestima sistematic diversitatea.
+- **Contraste neestimabile.** O comparație e **neestimabilă** dacă vreun model nu are nicio pereche completă sau dacă statistica nu e definită (de exemplu, nicio listă de nume extrasă într-o condiție). O comparație neestimabilă nu primește verdict direcțional; dacă oricare din cele 6 comparații e neestimabilă sau lipsește un model, **verdictul global se suspendă**.
+- **Rulări eșuate definitiv:** lipsesc din analiză; numărul lor se raportează pe model și condiție.
 - **Pe fiecare model (secundar):** aceleași 6 teste, cu corecție Holm separată pentru fiecare model.
-- **Răspunsuri trunchiate sau eșuate:** rămân în analiză cele trunchiate; cererile eșuate de 3 ori lipsesc. Ambele numere se raportează.
-- **Sensibilitate (P2, necorectată):** fără răspunsurile care menționează comanda; doar cu primul evaluator; doar cu al doilea evaluator.
+- **Sensibilitate (P2, necorectată):** fără perechile în care vreun răspuns menționează comanda; doar cu primul evaluator; doar cu al doilea evaluator.
 
 ## 8. Reguli de decizie (simetrice, stabilite dinainte)
 
-Pentru fiecare comparație din analiza principală, rezultatul e unul din trei:
+Pentru fiecare comparație din analiza principală, rezultatul e unul din patru:
 - **B mai bun** — p ajustat < 0,05 și diferența în favoarea lui B;
 - **B mai slab** — p ajustat < 0,05 și diferența în defavoarea lui B;
-- **Nicio diferență detectată** — p ajustat ≥ 0,05. Asta **nu** înseamnă că efectul e zero, ci că testul nu l-a putut distinge; se raportează intervalul de încredere.
+- **Nicio diferență detectată** — p ajustat ≥ 0,05;
+- **Neestimabil** — vezi §7.
 
-Interpretare:
+Verdictul global:
 
-| Rezultat | Concluzie |
+| Situație | Verdict |
 |---|---|
-| B mai bun decât C **și** decât D, la cel puțin un rezultat primar, și nu mai slab la niciuna dintre comparații | Afirmația e **susținută** pentru acest set de modele: sintaxa bate atât limbajul obișnuit, cât și placebo-ul. |
-| B mai bun decât A, dar nu decât D | Linia are efect, dar efectul vine din cuvântul „creative” sau din prezența unei linii, nu dintr-un „mod” activat. |
-| B nu diferă de C | Forma de comandă nu aduce nimic în plus față de o instrucțiune în cuvinte. |
-| B nu diferă de A | Nu s-a detectat niciun efect al liniei. |
-| B mai slab decât A, C sau D | Se raportează la fel de vizibil ca un rezultat favorabil. |
+| Vreo comparație e neestimabilă sau lipsește un model | **Suspendat.** |
+| La **același** rezultat primar, B e mai bun decât C **și** decât D, iar B nu e mai slab la niciuna dintre cele 6 comparații | Afirmația e **susținută** pentru acest set de modele. |
+| Orice altă situație | Afirmația **nu e susținută** de acest experiment. |
 
-Orice concluzie se însoțește de numărul de modele la care diferența a mers în aceeași direcție, ca să se vadă dacă un rezultat combinat vine de la toate modelele sau doar de la unul-două.
+Pe lângă verdict, raportul enumeră, separat pentru P1 și P2, rezultatul fiecărei comparații (față de A, C și D), orice rezultat „B mai slab” la fel de vizibil ca unul favorabil, și la câte modele diferența a mers în favoarea lui B.
+
+Limitele interpretării:
+- „Nicio diferență detectată” **nu** înseamnă că efectul e zero sau că două condiții sunt echivalente; poate fi și o diferență reală pe care testul nu a putut-o distinge.
+- Experimentul compară patru texte. El nu poate atribui un efect unui mecanism anume (cuvântul „creative”, forma de comandă sau un „mod” activat). Contrastul cu placebo-ul D arată doar dacă B se distinge de o linie de aceeași formă, cu același cuvânt.
 
 ## 9. Limite cunoscute
 
@@ -143,6 +152,8 @@ Orice concluzie se însoțește de numărul de modele la care diferența a mers 
 - Sarcinile sunt în limba română; unele modele mici o stăpânesc mai slab. Comparațiile se fac însă în interiorul aceluiași model, deci asta afectează toate condițiile la fel.
 - 20 de rulări pe combinație și model pot detecta, pe un model luat separat, doar efecte moderate sau mari. Analiza combinată are mai multă putere.
 - Testul acoperă doar sintaxa dată ca exemplu public.
+- Un răspuns poate repeta singur comanda și astfel își poate dezvălui condiția în fața evaluatorului; riscul e măsurat prin analiza de sensibilitate (§7).
+- Dacă evaluarea e întreruptă și reluată, răspunsurile rămase sunt amestecate din nou, deci ordinea în care le vede evaluatorul diferă de cea dintr-o rulare continuă. Fiecare evaluare rămâne independentă și oarbă.
 
 ## Abateri
 

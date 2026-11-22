@@ -5,7 +5,7 @@ Utilizare:
 """
 import statistics
 
-from common import DATA, ROOT, load_config, load_json, read_jsonl, safe_name
+from common import DATA, ROOT, is_ok, load_config, load_json, read_jsonl, safe_name
 from run_experiment import make_schedule
 
 
@@ -30,8 +30,10 @@ def main():
     next_cmd = None
     for i, m in enumerate(order, 1):
         done = sum(r["model"] == m for r in runs)
+        failed = sum(r["model"] == m and not is_ok(r) for r in runs)
         mark = "gata" if done >= per_model else ("în lucru" if done else "")
-        print(f"  {i}. {m:32s} {done:4d}/{per_model}  {mark}")
+        extra = f"  ({failed} eșuate definitiv)" if failed else ""
+        print(f"  {i}. {m:32s} {done:4d}/{per_model}  {mark}{extra}")
         if next_cmd is None and done < per_model:
             ml = [r["latency_s"] for r in runs if r["model"] == m and r.get("latency_s")]
             est = (statistics.fmean(ml) if ml else avg)
@@ -39,12 +41,14 @@ def main():
             next_cmd = f"python scripts/run_experiment.py --model {m}{eta}"
 
     print("\nETAPA 2 — evaluare (pornește după ce toată generarea e gata)\n")
-    run_ids = {r["run_id"] for r in runs}
+    ok_ids = {r["run_id"] for r in runs if is_ok(r)}
     for j in cfg["judges"]:
         rows = read_jsonl(DATA / f"judge_{safe_name(j['model'])}.jsonl")
-        done = sum(r["run_id"] in run_ids for r in rows)
-        print(f"  {j['model']:32s} {done:4d}/{len(plan)}")
-        if next_cmd is None and done < len(plan):
+        done = sum(r["run_id"] in ok_ids for r in rows)
+        bad = sum(r["run_id"] in ok_ids and r.get("status", "ok") != "ok" for r in rows)
+        extra = f"  ({bad} invalide sau eșuate)" if bad else ""
+        print(f"  {j['model']:32s} {done:4d}/{len(ok_ids)}{extra}")
+        if next_cmd is None and done < len(ok_ids):
             next_cmd = f"python scripts/judge.py --judge {j['model']}"
 
     if next_cmd is None:

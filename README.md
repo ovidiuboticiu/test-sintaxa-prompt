@@ -27,21 +27,24 @@ git show preinregistrare-v1 --stat
 | `PROTOCOL.md` | Protocolul preînregistrat |
 | `config.json` | Modelele și parametrii folosiți |
 | `prompts/` | Textul exact al condițiilor, al sarcinilor și grila evaluatorului |
-| `scripts/run_experiment.py` | Trimite cele 160 de cereri către LM Studio, în ordine aleatoare fixă |
+| `scripts/run_experiment.py` | Trimite cele 800 de cereri (160 pe model) către LM Studio, în ordine aleatoare fixă |
+| `scripts/model_fingerprints.py` | Înregistrează fișierele exacte ale modelelor și sumele SHA-256 în `MODELE.md` |
+| `MODELE.md` | Fișierele GGUF folosite (după pilot) |
 | `scripts/judge.py` | Evaluarea oarbă automată a originalității |
 | `scripts/make_blind_sheet.py` | Tabel pentru evaluare umană oarbă (opțional) |
 | `scripts/analyze.py` | Analiza statistică preînregistrată și raportul |
 | `scripts/status.py` | Progresul pe sesiuni și următoarea comandă |
 | `EVALUARE_UMANA.md` | Instrucțiuni pentru evaluatorii umani (opțional) |
 | `AUDIT.md` | Auditul pre-execuție: întrebări și reguli de oprire |
+| `AUDIT_RAPORT.md`, `AUDIT_RASPUNS.md` | Raportul auditorului și corecturile făcute |
 | `data/` | Datele brute (după experiment) |
 | `results/` | Raportul final (după experiment) |
 
-Scripturile folosesc doar biblioteca standard Python (3.9+); nu trebuie instalat nimic în plus.
+Scripturile folosesc doar biblioteca standard Python (3.10 sau mai nou); nu trebuie instalat nimic în plus.
 
 ## Cum reproduci experimentul
 
-1. Instalează [LM Studio](https://lmstudio.ai) și descarcă modelele din `config.json`.
+1. Instalează [LM Studio](https://lmstudio.ai) și descarcă **exact** fișierele de model din `MODELE.md` (sursa e indicată de cale; poți verifica suma SHA-256).
 2. În LM Studio: **Developer → Start Server** (adresa implicită `http://localhost:1234`).
 3. Verifică planul, fără să trimiți nimic:
    ```
@@ -54,6 +57,10 @@ Scripturile folosesc doar biblioteca standard Python (3.9+); nu trebuie instalat
    python scripts/analyze.py --pilot
    ```
    Deschide `results/raport_pilot.md` și verifică dacă numele din T1 au fost extrase corect.
+   Apoi înregistrează fișierele de model folosite (doar autorul experimentului, o singură dată):
+   ```
+   python scripts/model_fingerprints.py --models-dir "D:\LMStudio\Models"
+   ```
 5. Experimentul propriu-zis (dacă se întrerupe, comanda reluată continuă de unde a rămas):
    ```
    python scripts/run_experiment.py

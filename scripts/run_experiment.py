@@ -15,7 +15,7 @@ import random
 from datetime import datetime, timezone
 
 from common import (DATA, ROOT, append_jsonl, build_message, chat, list_models,
-                    load_config, load_json, read_jsonl, safe_name)
+                    load_config, load_json, read_jsonl, safe_name, server_alive)
 
 
 def make_schedule(models, conditions, tasks, runs_per_cell, master_seed, tag=""):
@@ -97,19 +97,27 @@ def main():
     for p in todo:
         message = build_message(conditions[p["condition"]]["prefix"], tasks[p["task"]])
         print(f"[{p['order']:4d}/{len(plan)}] {p['run_id']} ...", end=" ", flush=True)
+        stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
         try:
             res = chat(cfg["base_url"], p["model"], message,
                        temperature=params["temperature"], top_p=params["top_p"],
                        max_tokens=params["max_tokens"], seed=p["seed"],
                        timeout=cfg["request_timeout_s"])
         except RuntimeError as e:
-            print(f"EȘUAT: {e}")
+            if not server_alive(cfg["base_url"]):
+                raise SystemExit("\nServerul LM Studio nu mai răspunde. Oprit fără a marca vreun eșec; "
+                                 "pornește din nou serverul și reia aceeași comandă.")
+            # Eșec definitiv (protocol §7): se înregistrează și nu se mai reîncearcă la reluare.
+            append_jsonl(out, {**p, "message": message, "params": params, "timestamp_utc": stamp,
+                               "status": "esuat", "error": str(e), "text": ""})
+            print(f"EȘUAT DEFINITIV: {e}")
             continue
         append_jsonl(out, {
             **p,
             "message": message,
             "params": params,
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "timestamp_utc": stamp,
+            "status": "ok",
             **res,
         })
         print(f"{res['latency_s']} s, finish={res['finish_reason']}")

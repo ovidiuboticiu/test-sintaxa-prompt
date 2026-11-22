@@ -121,6 +121,21 @@ def chat(base_url, model, message, temperature, top_p=None, max_tokens=1500,
     raise RuntimeError(f"Cererea a eșuat de {retries} ori: {last_err}")
 
 
+def server_alive(base_url):
+    """True dacă serverul LM Studio răspunde. Folosit ca să nu marcăm drept eșec definitiv
+    o cerere care a eșuat doar pentru că serverul era oprit."""
+    try:
+        list_models(base_url)
+        return True
+    except Exception:
+        return False
+
+
+def is_ok(row):
+    """Rândurile vechi, fără câmpul status, sunt considerate reușite."""
+    return row.get("status", "ok") == "ok"
+
+
 def list_models(base_url):
     with urllib.request.urlopen(base_url.rstrip("/") + "/models", timeout=30) as resp:
         body = json.loads(resp.read().decode("utf-8"))
