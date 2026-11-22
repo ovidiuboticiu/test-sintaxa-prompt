@@ -87,6 +87,16 @@ Poți opri oricând cu **Ctrl+C**. Răspunsul aflat în lucru se pierde, iar la 
 
 Pe Windows, dacă `python` nu e recunoscut, folosește `py` în loc. În PowerShell, un clic în fereastră pune rularea pe pauză (QuickEdit); apasă o tastă ca să continue.
 
+## Contribuții și utilizarea AI
+
+Cercetarea a fost realizată de autor, cu asistența unor instrumente AI:
+
+- **Autorul:** întrebarea de cercetare, alegerea designului (condiția placebo, modelele, numărul de rulări), deciziile asupra protocolului, rularea experimentului și interpretarea rezultatelor.
+- **Claude (Anthropic):** redactarea protocolului, a documentației și a codului, la cererea și sub controlul autorului. Commit-urile la care a contribuit sunt marcate cu `Co-Authored-By`.
+- **Codex (OpenAI):** auditul pre-execuție, descris în `AUDIT.md`.
+
+Modelele de limbaj testate și cele folosite ca evaluatori sunt instrumente de măsurare, nu autori.
+
 ## Limite
 
 Modele mici rulate local, o singură sintaxă testată, „creativitatea” măsurată indirect. Lista completă e în PROTOCOL.md, secțiunea 9.
