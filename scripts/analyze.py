@@ -83,6 +83,14 @@ def pearson(xs, ys):
     return cov / math.sqrt(sum((a - mx) ** 2 for a in xs) * sum((b - my) ** 2 for b in ys))
 
 
+def reasoning_tokens(r):
+    """Tokenii de raționament raportați de server; dacă lipsesc, caracterele de raționament (PROTOCOL.md §4)."""
+    det = (r.get("usage") or {}).get("completion_tokens_details") or {}
+    if det.get("reasoning_tokens") is not None:
+        return det["reasoning_tokens"]
+    return r.get("reasoning_chars", 0)
+
+
 def isnan(x):
     return x is None or x != x
 
@@ -238,6 +246,7 @@ def main():
         r["_score_by"] = {j: jscores[j].get(r["run_id"]) for j in judges}
         valid = [s for s in r["_score_by"].values() if s is not None]
         r["_n_scores"] = len(valid)
+        r["_reasoning"] = reasoning_tokens(r)
         r["_score"] = statistics.fmean(valid) if valid else None  # media evaluatorilor valizi
     by = {(m, t, c): [r for r in runs if r["model"] == m and r["task"] == t and r["condition"] == c]
           for m in models for t in ("T1", "T2") for c in CONDS}
@@ -267,6 +276,20 @@ def main():
                      f"{fmt(distinct2([r['text'] for r in t2]))} | {fmt(mean([r['_words'] for r in t2]), 1)} | "
                      f"{sum(r['_mentions'] for r in t1 + t2)} | "
                      f"{sum(r.get('finish_reason') == 'length' for r in t1 + t2)} | {nf} |")
+    L.append("")
+
+    # ----- raționament intern (secundar) -----
+    L.append("## Raționament intern (secundar)\n")
+    L.append("Proporția răspunsurilor cu raționament / tokeni medii de raționament, pe ambele sarcini.\n")
+    L.append("| Model | " + " | ".join(CONDS) + " |")
+    L.append("|---|" + "---|" * len(CONDS))
+    for m in models:
+        cells = []
+        for c in CONDS:
+            rs = by[(m, "T1", c)] + by[(m, "T2", c)]
+            k = sum(r["_reasoning"] > 0 for r in rs)
+            cells.append(f"{k}/{len(rs)} · {fmt(mean([r['_reasoning'] for r in rs]), 0)}")
+        L.append(f"| {m} | " + " | ".join(cells) + " |")
     L.append("")
 
     # ----- calitatea scorurilor -----
@@ -391,6 +414,10 @@ def main():
     for name, fn in variants:
         vt = run_tests(models, by, fn, mean, "T2", name, rng, with_ci=False)
         L.append(f"| {name} | " + " | ".join(f"{fmt(t['diferenta'])} (p {fmt(t['p'], 3)})" for t in vt) + " |")
+    for task in ("T1", "T2"):
+        vt = run_tests(models, by, lambda r: r["_reasoning"], mean, task, "R", rng, with_ci=False)
+        L.append(f"| Tokeni de raționament ({task}) | " + " | ".join(
+            f"{fmt(t['diferenta'], 1)} (p {fmt(t['p'], 3)})" for t in vt) + " |")
     L.append("\nValorile p din această secțiune nu sunt corectate și nu decid verdictul.\n")
 
     if human:

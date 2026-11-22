@@ -71,7 +71,7 @@ Modelele cu raționament explicit („reasoning”, „thinking”) au fost excl
 ### Setări
 
 - **Parametri de generare:** temperatură 0,8; top_p 0,95; top_k 40; repeat_penalty 1,1; max_tokens 1500. Sunt trimiși explicit cu fiecare cerere, deci nu depind de setările implicite ale modelelor din LM Studio, și sunt aceiași pentru toate modelele și rulările. Ceilalți parametri (de exemplu min_p, lungimea contextului) rămân la valorile implicite ale LM Studio și nu se modifică pe durata experimentului.
-- **Raționament intern („thinking”):** nu e dezactivat prin scripturi. Pentru fiecare răspuns se înregistrează câte caractere de raționament intern a produs modelul; raționamentul nu intră în textul evaluat. Pilotul arată care modele îl folosesc; orice setare schimbată în LM Studio după pilot se face înainte de etichetă și se notează în `MODELE.md`.
+- **Raționament intern („thinking”):** se păstrează comportamentul implicit al fiecărui model, cel pe care îl are orice utilizator; scripturile nu îl dezactivează. Raționamentul nu intră în textul evaluat. Pentru fiecare răspuns se înregistrează numărul de tokeni de raționament raportat de server (sau, dacă lipsește, numărul de caractere de raționament). Pilotul a arătat că unele modele (de exemplu Gemma) raționează și că lungimea raționamentului poate depinde de prima linie a mesajului; de aceea ea e măsurată ca rezultat secundar (§6).
 - **Rulări:** 20 pe fiecare combinație condiție × sarcină × model → 4 × 2 × 5 × 20 = **800 de rulări**.
 - **Seed-uri:** pentru un model, o sarcină și o repetiție date, **toate cele patru condiții primesc același seed**. Astfel singura diferență dintre condiții e prima linie a mesajului. Seed-urile sunt generate determinist din seed-ul principal `20261122` și salvate cu fiecare răspuns.
 - **Ordinea:** modelele sunt rulate pe rând, în ordine aleatoare fixă (ca LM Studio să nu reîncarce modelele la fiecare cerere). În interiorul fiecărui model, cele 160 de rulări sunt amestecate aleator, ca o schimbare în timp (încălzirea laptopului, cache) să nu favorizeze o condiție.
@@ -113,6 +113,7 @@ Setările sunt în `config.json`; valorile efectiv folosite sunt salvate cu fiec
 - Diversitatea lexicală la T2 (distinct-2: proporția perechilor de cuvinte unice).
 - Acordul dintre cei doi evaluatori.
 - Numărul de răspunsuri care menționează comanda și numărul de răspunsuri trunchiate.
+- **Raționamentul intern:** pe model și condiție, proporția răspunsurilor cu raționament și numărul mediu de tokeni de raționament; în plus, comparațiile B față de A, C și D pentru numărul de tokeni de raționament, cu același test pe perechi ca la rezultatele primare, dar fără corecție și fără rol în verdict.
 
 ## 7. Analiza statistică
 
