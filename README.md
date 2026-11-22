@@ -102,7 +102,20 @@ Scriptul arată ce s-a terminat, cât a mai rămas (estimat din timpii de până
 
 Poți opri oricând cu **Ctrl+C**. Răspunsul aflat în lucru se pierde, iar la repornire se reface; tot ce era gata rămâne salvat.
 
-Pe Windows, dacă `python` nu e recunoscut, folosește `py` în loc. În PowerShell, un clic în fereastră pune rularea pe pauză (QuickEdit); apasă o tastă ca să continue.
+### Linux și macOS
+
+Scripturile folosesc doar biblioteca standard Python și funcționează la fel pe Windows, Linux și macOS. Diferențele țin doar de comenzi:
+
+- LM Studio are versiune pentru Linux (AppImage) și pentru macOS; pașii de mai sus sunt aceiași.
+- În loc de `python` se folosește de obicei `python3`.
+- Dosarul de modele al LM Studio e de obicei `~/.lmstudio/models` (calea exactă apare în LM Studio, la *My Models*).
+- Toate comenzile se rulează din dosarul repozitoriului; căile cu `/` merg pe toate sistemele.
+
+**Alt server decât LM Studio.** Scripturile vorbesc cu orice server compatibil cu API-ul OpenAI (de exemplu Ollama sau `llama-server` din llama.cpp): se schimbă `base_url` și numele modelelor în `config.json`, folosind fișierele din `MODELE.md`. Rezultatul e atunci o **replicare** a experimentului, nu o repetare identică: alt motor de inferență, altă versiune sau alt procesor pot produce alte răspunsuri chiar cu aceleași fișiere de model și aceleași seed-uri. Orice astfel de schimbare trebuie raportată odată cu rezultatele.
+
+### Windows
+
+Dacă `python` nu e recunoscut, folosește `py` în loc. În PowerShell, un clic în fereastră pune rularea pe pauză (QuickEdit); apasă o tastă ca să continue.
 
 ## Contribuții și utilizarea AI
 
