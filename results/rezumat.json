@@ -1,0 +1,402 @@
+{
+  "teste_primare": [
+    {
+      "rezultat": "P1 diversitate nume (T1)",
+      "comparatie": "B vs A",
+      "perechi_incomplete": 0,
+      "diferenta": -0.0024761904761904764,
+      "p": 0.8566143385661434,
+      "ci95": null,
+      "p_holm": 0.8566143385661434,
+      "verdict": "nicio diferență detectată"
+    },
+    {
+      "rezultat": "P1 diversitate nume (T1)",
+      "comparatie": "B vs C",
+      "perechi_incomplete": 0,
+      "diferenta": -0.040000000000000015,
+      "p": 9.999000099990002e-05,
+      "ci95": null,
+      "p_holm": 0.0005999400059994001,
+      "verdict": "B mai slab"
+    },
+    {
+      "rezultat": "P1 diversitate nume (T1)",
+      "comparatie": "B vs D",
+      "perechi_incomplete": 0,
+      "diferenta": -0.028666666666666663,
+      "p": 0.027597240275972403,
+      "ci95": null,
+      "p_holm": 0.0827917208279172,
+      "verdict": "nicio diferență detectată"
+    },
+    {
+      "rezultat": "P2 originalitate (T2)",
+      "comparatie": "B vs A",
+      "perechi_incomplete": 0,
+      "diferenta": 0.44499999999999995,
+      "p": 9.999000099990002e-05,
+      "ci95": [
+        0.3249999999999999,
+        0.5650000000000001
+      ],
+      "p_holm": 0.0005999400059994001,
+      "verdict": "B mai bun"
+    },
+    {
+      "rezultat": "P2 originalitate (T2)",
+      "comparatie": "B vs C",
+      "perechi_incomplete": 0,
+      "diferenta": -0.25500000000000006,
+      "p": 0.0007999200079992001,
+      "ci95": [
+        -0.38500000000000006,
+        -0.12000000000000002
+      ],
+      "p_holm": 0.0031996800319968005,
+      "verdict": "B mai slab"
+    },
+    {
+      "rezultat": "P2 originalitate (T2)",
+      "comparatie": "B vs D",
+      "perechi_incomplete": 0,
+      "diferenta": 0.11499999999999991,
+      "p": 0.11198880111988802,
+      "ci95": [
+        -0.014999999999999902,
+        0.24499999999999983
+      ],
+      "p_holm": 0.22397760223977603,
+      "verdict": "nicio diferență detectată"
+    }
+  ],
+  "concluzie": [
+    "**Afirmația nu e susținută de acest experiment.** Criteriul (B mai bun decât C și decât D la același rezultat primar, fără a fi mai slab la vreo comparație) nu a fost îndeplinit.",
+    "**B a ieșit mai slab** la: P1 (B vs C), P2 (B vs C).",
+    "P1 (diversitatea numelor): față de A — nicio diferență detectată; față de C — B mai slab; față de D — nicio diferență detectată.",
+    "P2 (originalitatea textului): față de A — B mai bun; față de C — B mai slab; față de D — nicio diferență detectată.",
+    "Consecvență între modele (diferență în favoarea lui B, indiferent de semnificație): P1 B vs A: 3 din 5; P1 B vs C: 0 din 5; P1 B vs D: 1 din 5; P2 B vs A: 5 din 5; P2 B vs C: 1 din 5; P2 B vs D: 4 din 5.",
+    "O diferență nedetectată nu dovedește că efectul e zero sau că două condiții sunt echivalente; datele nu permit atribuirea unui mecanism (cuvânt, formă, „mod”)."
+  ],
+  "pe_modele": {
+    "gemma-4-e4b-it": [
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": 0.009999999999999898,
+        "p": 0.8647135286471352,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": -0.030000000000000027,
+        "p": 0.38296170382961703,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": -0.020000000000000018,
+        "p": 0.679032096790321,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": 0.19999999999999973,
+        "p": 0.1551844815518448,
+        "ci95": null,
+        "p_holm": 0.775922407759224,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": -0.3999999999999999,
+        "p": 0.0165983401659834,
+        "ci95": null,
+        "p_holm": 0.09959004099590041,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": 0.04999999999999982,
+        "p": 0.8213178682131786,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      }
+    ],
+    "qwen3-4b-instruct-2507": [
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": -0.030000000000000027,
+        "p": 0.595940405959404,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": -0.08000000000000007,
+        "p": 0.0051994800519948,
+        "ci95": null,
+        "p_holm": 0.025997400259974,
+        "verdict": "B mai slab"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": -0.06000000000000005,
+        "p": 0.1683831616838316,
+        "ci95": null,
+        "p_holm": 0.5051494850514948,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": 0.4750000000000001,
+        "p": 0.00029997000299970003,
+        "ci95": null,
+        "p_holm": 0.0017998200179982003,
+        "verdict": "B mai bun"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": -0.25,
+        "p": 0.031596840315968405,
+        "ci95": null,
+        "p_holm": 0.12638736126387362,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": 0.04999999999999982,
+        "p": 0.7676232376762324,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      }
+    ],
+    "ministral-3-8b-instruct-2512": [
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": 0.010000000000000009,
+        "p": 0.765023497650235,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": -0.010000000000000009,
+        "p": 0.6216378362163784,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": -0.010000000000000009,
+        "p": 0.7518248175182481,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": 0.40000000000000036,
+        "p": 0.0103989601039896,
+        "ci95": null,
+        "p_holm": 0.051994800519948,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": -0.4500000000000002,
+        "p": 0.0006999300069993001,
+        "ci95": null,
+        "p_holm": 0.004199580041995801,
+        "verdict": "B mai slab"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": -0.04999999999999982,
+        "p": 0.7956204379562044,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      }
+    ],
+    "granite-4.1-8b": [
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": -0.04999999999999993,
+        "p": 0.2328767123287671,
+        "ci95": null,
+        "p_holm": 0.9007099290070993,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": -0.07999999999999996,
+        "p": 0.0035996400359964,
+        "ci95": null,
+        "p_holm": 0.021597840215978402,
+        "verdict": "B mai slab"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": -0.06999999999999995,
+        "p": 0.0547945205479452,
+        "ci95": null,
+        "p_holm": 0.273972602739726,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": 0.19999999999999973,
+        "p": 0.3087691230876912,
+        "ci95": null,
+        "p_holm": 0.9007099290070993,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": 0.1499999999999999,
+        "p": 0.46205379462053797,
+        "ci95": null,
+        "p_holm": 0.9007099290070993,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": 0.2999999999999998,
+        "p": 0.22517748225177484,
+        "ci95": null,
+        "p_holm": 0.9007099290070993,
+        "verdict": "nicio diferență detectată"
+      }
+    ],
+    "microsoft_phi-4-mini-instruct": [
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": 0.04761904761904767,
+        "p": 0.0053994600539946005,
+        "ci95": null,
+        "p_holm": 0.026997300269973004,
+        "verdict": "B mai bun"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": 0.0,
+        "p": 1.0,
+        "ci95": null,
+        "p_holm": 1.0,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P1",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": 0.01666666666666672,
+        "p": 0.206979302069793,
+        "ci95": null,
+        "p_holm": 0.827917208279172,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs A",
+        "perechi_incomplete": 0,
+        "diferenta": 0.95,
+        "p": 0.0004999500049995,
+        "ci95": null,
+        "p_holm": 0.0029997000299970002,
+        "verdict": "B mai bun"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs C",
+        "perechi_incomplete": 0,
+        "diferenta": -0.3250000000000002,
+        "p": 0.21527847215278473,
+        "ci95": null,
+        "p_holm": 0.827917208279172,
+        "verdict": "nicio diferență detectată"
+      },
+      {
+        "rezultat": "P2",
+        "comparatie": "B vs D",
+        "perechi_incomplete": 0,
+        "diferenta": 0.22499999999999987,
+        "p": 0.3458654134586541,
+        "ci95": null,
+        "p_holm": 0.827917208279172,
+        "verdict": "nicio diferență detectată"
+      }
+    ]
+  },
+  "consecventa": {
+    "P1 B vs A": 3,
+    "P1 B vs C": 0,
+    "P1 B vs D": 1,
+    "P2 B vs A": 5,
+    "P2 B vs C": 1,
+    "P2 B vs D": 4
+  },
+  "rulari_esuate": 0
+}
