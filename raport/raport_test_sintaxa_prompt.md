@@ -403,6 +403,22 @@ Pentru utilizatorul care vrea răspunsuri mai creative de la un model asemănăt
 
 Repozitoriul studiului (<https://github.com/ovidiuboticiu/test-sintaxa-prompt>) conține protocolul preînregistrat, codul, prompturile, identificarea exactă a modelelor, raportul auditului, datele pilot, toate cele 800 de răspunsuri brute, cele 1.600 de note ale evaluatorilor și raportul generat automat de analiză. Eticheta `preinregistrare-v1` permite verificarea faptului că protocolul a precedat datele. Experimentul poate fi repetat pe Windows, Linux sau macOS, cu LM Studio și Python 3.10 sau mai nou, urmând instrucțiunile din fișierul README. Analiza poate fi refăcută din datele publicate cu o singură comandă.
 
+Tabelul 11 rezumă calendarul studiului, pentru cine vrea să estimeze timpul necesar unei repetări. Toate rulările s-au făcut pe un laptop personal cu Windows (procesor AMD Ryzen 7 5825U, 32 GB RAM, grafică integrată, fără placă video dedicată). Duratele evaluării sunt aproximative, deoarece fișierele de evaluare nu înregistrează ora fiecărei note.
+
+\Needspace{12\baselineskip}
+
+**Tabelul 11. Calendarul studiului**
+
+| Etapă | Data | Durată |
+|:---------------------------|:-------------------|:----------------------|
+| Elaborarea protocolului și a codului | 22 noiembrie | o zi (cu auditul și pilotul) |
+| Auditul extern și corecturile | 22 noiembrie | o singură rundă |
+| Rularea pilot și stabilirea setărilor | 22 noiembrie | — |
+| Preînregistrarea (eticheta Git) | 22 noiembrie, 18:10 UTC | — |
+| Generarea celor 800 de răspunsuri | 22–24 noiembrie | 7,5 ore, în cinci sesiuni |
+| Evaluarea (2 × 800 de note) | 24–25 noiembrie | aproximativ 7 ore |
+| Analiza statistică | 25 noiembrie | sub un minut |
+
 Cercetarea a fost realizată de autor, cu asistența unor instrumente AI. Întrebarea de cercetare, alegerea designului (inclusiv condiția placebo, modelele și numărul de rulări), deciziile asupra protocolului, rularea experimentului și interpretarea rezultatelor aparțin autorului. Claude (Anthropic) a asistat la redactarea protocolului, a codului, a documentației și a acestui raport, la cererea și sub controlul autorului. Codex (OpenAI) a efectuat auditul pre-execuție. Modelele testate și cele folosite ca evaluatori sunt instrumente de măsurare, nu autori.
 
 \Needspace{6\baselineskip}
