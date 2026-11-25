@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "Dacă folosești acest studiu, te rog să citezi raportul științific de mai jos."
+type: dataset
+title: "Test sintaxă prompt: experiment preînregistrat cu linia //Dev_Lab_Op_Mode --creative"
+authors:
+  - family-names: "Boticiu"
+    given-names: "Ovidiu"
+version: 1.0.0
+date-released: 2026-11-25
+url: "https://github.com/ovidiuboticiu/test-sintaxa-prompt"
+repository-code: "https://github.com/ovidiuboticiu/test-sintaxa-prompt"
+abstract: "Preregistered experiment testing whether the command-like prompt line //Dev_Lab_Op_Mode --creative affects the creativity of five local language models, compared with no instruction, a plain-language instruction and a placebo line of the same form. 800 generations, blind scoring by two automatic judges, paired permutation tests with Holm correction. Research assisted by AI; without human peer review."
+keywords:
+  - language models
+  - prompt engineering
+  - prompt sensitivity
+  - preregistration
+  - placebo control
+  - LLM-as-a-judge
+  - permutation test
+license:
+  - CC-BY-4.0
+  - MIT
+preferred-citation:
+  type: report
+  authors:
+    - family-names: "Boticiu"
+      given-names: "Ovidiu"
+  title: "Are o „sintaxă de comandă” vreun efect asupra creativității unui model de limbaj? Un experiment preînregistrat cu linia //Dev_Lab_Op_Mode --creative pe cinci modele locale"
+  year: 2026
+  url: "https://github.com/ovidiuboticiu/test-sintaxa-prompt/blob/main/raport/raport_test_sintaxa_prompt.pdf"

@@ -94,9 +94,10 @@ def main():
     todo = [p for p in plan if p["run_id"] not in done]
     print(f"{len(plan) - len(todo)} rulări deja făcute, {len(todo)} rămase. Rezultate în {out.relative_to(ROOT)}")
 
+    position = {q["run_id"]: i for i, q in enumerate(plan, 1)}
     for p in todo:
         message = build_message(conditions[p["condition"]]["prefix"], tasks[p["task"]])
-        print(f"[{p['order']:4d}/{len(plan)}] {p['run_id']} ...", end=" ", flush=True)
+        print(f"[{position[p['run_id']]:4d}/{len(plan)}] {p['run_id']} ...", end=" ", flush=True)
         stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
         try:
             res = chat(cfg["base_url"], p["model"], message,

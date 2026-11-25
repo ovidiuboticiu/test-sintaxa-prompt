@@ -57,6 +57,9 @@ git show preinregistrare-v1 --stat
 | `data/` | Datele brute: 800 de răspunsuri, 1.600 de note ale evaluatorilor, datele pilot |
 | `results/` | Raportul generat automat de analiză (`raport.md`, `rezumat.json`) |
 | `raport/` | Raportul științific (PDF și sursa Markdown) și fișierele de construire |
+| `RELEASE_NOTES_v1.0.0.md` | Ce conține versiunea publică 1.0.0 |
+| `CITATION.cff`, `LICENSES.md` | Citare și licențe |
+| `SHA256SUMS.txt` | Sumele de control ale datelor și ale raportului |
 
 Scripturile folosesc doar biblioteca standard Python (3.10 sau mai nou); nu trebuie instalat nimic în plus.
 
@@ -138,3 +141,25 @@ Modelele de limbaj testate și cele folosite ca evaluatori sunt instrumente de m
 ## Limite
 
 Modele mici rulate local, o singură sintaxă testată, „creativitatea” măsurată indirect. Lista completă e în PROTOCOL.md, secțiunea 9.
+
+## Modificări după experiment
+
+După încheierea colectării datelor s-a corectat un singur defect, cosmetic: contorul afișat de `scripts/run_experiment.py` la rularea cu `--model` arăta poziția globală raportată la totalul modelului (de exemplu `[161/160]`). Corectura nu schimbă nicio cerere trimisă modelelor și nicio dată. Versiunea exactă folosită în experiment rămâne disponibilă la eticheta `preinregistrare-v1`. Toate abaterile de la protocol sunt descrise în `results/raport.md` și în secțiunea 7 a raportului științific.
+
+## Integritatea fișierelor
+
+`SHA256SUMS.txt` conține sumele SHA-256 ale datelor, rezultatelor și raportului. Verificare:
+
+```
+sha256sum -c SHA256SUMS.txt
+```
+
+## Cum citezi
+
+Boticiu, O. (2026). *Are o „sintaxă de comandă” vreun efect asupra creativității unui model de limbaj? Un experiment preînregistrat cu linia //Dev_Lab_Op_Mode --creative pe cinci modele locale.* Raport tehnic de cercetare. https://github.com/ovidiuboticiu/test-sintaxa-prompt
+
+Datele de citare sunt și în `CITATION.cff`.
+
+## Licență
+
+Raportul, protocolul, documentația, prompturile și datele sunt publicate sub **CC BY 4.0**, iar codul Python din `scripts/` sub **MIT**. Detaliile sunt în [LICENSES.md](LICENSES.md).
