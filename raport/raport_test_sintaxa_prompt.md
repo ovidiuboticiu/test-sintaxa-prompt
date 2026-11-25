@@ -10,9 +10,16 @@ lang: ro-RO
 
 ## Rezumat
 
-**Obiectiv.** În comunitățile online despre inteligență artificială circulă afirmația că anumite linii de tip comandă, scrise la începutul unei conversații, ar activa „moduri” speciale ale modelelor de limbaj și le-ar controla comportamentul mai bine decât o instrucțiune formulată obișnuit. Studiul de față testează un exemplu public al acestei afirmații: linia `//Dev_Lab_Op_Mode --creative`, prezentată ca un mijloc de a obține răspunsuri mai creative.
+**Obiectiv.** În comunitățile online despre inteligență artificială circulă afirmația că anumite linii de tip comandă, scrise la începutul unei conversații, ar activa „moduri” speciale ale modelelor de limbaj și le-ar controla comportamentul mai bine decât o instrucțiune formulată obișnuit. Studiul de față testează un exemplu public al acestei afirmații, prezentat ca un mijloc de a obține răspunsuri mai creative: linia `\mbox{\texttt{//Dev\_Lab\_Op\_Mode -{}-creative}}`{=latex}.
 
-**Metodă.** Cinci modele de limbaj mici (4–8 miliarde de parametri), din cinci familii diferite, au fost rulate local, fără instrucțiuni de sistem. Fiecare a primit două sarcini în limba română (cinci nume pentru o cafenea și primul paragraf al unei povești) în patru condiții care diferă doar prin prima linie a mesajului: nicio linie (A), linia testată (B), instrucțiunea obișnuită „Răspunde cât mai creativ.” (C) și un placebo cu aceeași formă, dar cu un „mod” inventat, `//Zq_Rt_Op_Mode --creative` (D). Au rezultat 800 de răspunsuri, cu 20 de repetiții pe fiecare combinație și seed-uri comune între condiții. Rezultatele primare au fost diversitatea numelor (P1) și originalitatea paragrafului (P2), notată orb de doi evaluatori automați. Protocolul, testele statistice și regulile de decizie au fost fixate într-o etichetă Git înainte de colectarea datelor.
+**Metodă.** Cinci modele de limbaj mici (4–8 miliarde de parametri), din cinci familii diferite, au fost rulate local, fără instrucțiuni de sistem. Fiecare a primit două sarcini în limba română (cinci nume pentru o cafenea și primul paragraf al unei povești) în patru condiții care diferă doar prin prima linie a mesajului:
+
+- **A:** nicio linie (referința);
+- **B:** linia testată, `//Dev_Lab_Op_Mode --creative`;
+- **C:** instrucțiunea obișnuită „Răspunde cât mai creativ.”;
+- **D:** placebo, `//Zq_Rt_Op_Mode --creative` (aceeași formă, „mod” inventat).
+
+\noindent Au rezultat 800 de răspunsuri, cu 20 de repetiții pe fiecare combinație și seed-uri comune între condiții. Rezultatele primare au fost diversitatea numelor (P1) și originalitatea paragrafului (P2), notată orb de doi evaluatori automați. Protocolul, testele statistice și regulile de decizie au fost fixate într-o etichetă Git înainte de colectarea datelor.
 
 **Rezultate.** Față de lipsa oricărei instrucțiuni, linia testată a crescut scorul de originalitate al paragrafelor cu 0,45 puncte pe o scală de la 1 la 5 (interval de încredere 95%: 0,33–0,57), cu aceeași direcție la toate cele cinci modele. Placebo-ul D nu s-a deosebit însă de linia testată la niciunul dintre rezultatele primare, iar instrucțiunea obișnuită C a obținut rezultate mai bune decât linia testată atât la diversitatea numelor (−0,040), cât și la originalitate (−0,26; interval 95%: −0,39 până la −0,12).
 
