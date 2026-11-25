@@ -21,9 +21,9 @@ lang: ro-RO
 
 \noindent Au rezultat 800 de răspunsuri, cu 20 de repetiții pe fiecare combinație și seed-uri comune între condiții. Rezultatele primare au fost diversitatea numelor (P1) și originalitatea paragrafului (P2), notată orb de doi evaluatori automați. Protocolul, testele statistice și regulile de decizie au fost fixate într-o etichetă Git înainte de colectarea datelor.
 
-**Rezultate.** Față de lipsa oricărei instrucțiuni, linia testată a crescut scorul de originalitate al paragrafelor cu 0,45 puncte pe o scală de la 1 la 5 (interval de încredere 95%: 0,33–0,57), cu aceeași direcție la toate cele cinci modele. Placebo-ul D nu s-a deosebit însă de linia testată la niciunul dintre rezultatele primare, iar instrucțiunea obișnuită C a obținut rezultate mai bune decât linia testată atât la diversitatea numelor (−0,040), cât și la originalitate (−0,26; interval 95%: −0,39 până la −0,12).
+**Rezultate.** Față de lipsa oricărei instrucțiuni, linia testată a crescut scorul de originalitate al paragrafelor cu 0,45 puncte pe o scală de la 1 la 5 (interval de încredere 95%: 0,33–0,57), cu aceeași direcție la toate cele cinci modele. Față de placebo-ul D nu s-a detectat însă nicio diferență semnificativă statistic la niciunul dintre rezultatele primare, iar instrucțiunea obișnuită C a obținut rezultate mai bune decât linia testată atât la diversitatea numelor (diferența B minus C: −0,040), cât și la originalitate (B minus C: −0,26; interval 95%: −0,39 până la −0,12).
 
-**Concluzie.** Conform regulilor preînregistrate, afirmația nu este susținută de acest experiment. Pe modelele testate, linia nu s-a comportat ca un „mod” distinct: o linie inventată cu aceeași formă a avut un efect asemănător, iar o propoziție obișnuită în română a fost mai eficientă. Experimentul nu poate separa efectul cuvântului „creative” de cel al formei de comandă și nu se extinde automat la modele mari sau la servicii online.
+**Concluzie.** Conform regulilor preînregistrate, afirmația nu este susținută de acest experiment. Pe modelele testate, datele nu arată un avantaj specific al liniei: o linie inventată cu aceeași formă nu s-a deosebit semnificativ de ea, iar o propoziție obișnuită în română a fost mai eficientă. Experimentul nu poate separa efectul cuvântului „creative” de cel al formei de comandă și nu se extinde automat la modele mari sau la servicii online.
 
 **Cuvinte-cheie:** modele de limbaj; inginerie a prompturilor; sensibilitate la formă; preînregistrare; control placebo; evaluare automată oarbă; test de permutare.
 
@@ -49,9 +49,9 @@ Studiul privește **doar** exemplul de mai sus, așa cum a fost dat public, apli
 
 ## 2. Context
 
-Sensibilitatea modelelor de limbaj la forma promptului este bine documentată. Sclar și colaboratorii (2024) au arătat că modificări mici de formatare, cum ar fi separatorii, spațiile sau majusculele, pot produce diferențe de până la 76 de puncte de acuratețe la un model de 13 miliarde de parametri. În plus, formatul favorabil diferă de la un model la altul. He și colaboratorii (2024) au găsit diferențe de până la 40% între variante ale aceleiași cereri scrise ca text simplu, Markdown, YAML sau JSON, cu o stabilitate mai mare la modelele mai mari. Mishra și colaboratorii (2023) au raportat că instrucțiunile scrise ca pseudo-cod au îmbunătățit performanța la unele sarcini.
+Sensibilitatea modelelor de limbaj la forma promptului este bine documentată. Sclar și colaboratorii (2024) au arătat că modificări mici de formatare, cum ar fi separatorii, spațiile sau majusculele, pot produce diferențe de până la 76 de puncte de acuratețe la modelul LLaMA-2-13B. În plus, formatul favorabil diferă de la un model la altul. He și colaboratorii (2024) au comparat șabloane de prompt scrise ca text simplu, Markdown, YAML sau JSON și au raportat, de exemplu, variații de până la 40% pentru GPT-3.5-turbo la o sarcină de traducere a codului, cu o stabilitate mai mare la modele mai mari, precum GPT-4. Mishra și colaboratorii (2023) au raportat că instrucțiunile scrise ca pseudo-cod au îmbunătățit performanța unor modele din familiile CodeGen și BLOOM, comparativ cu instrucțiunile în limbaj natural.
 
-Aceste studii reformatează însă **întreaga** cerere și păstrează conținutul. Nu am găsit un test al unei linii-comandă de tip „mod” comparate cu un placebo. Pentru sintaxa testată nu am găsit nici o documentație publică din partea furnizorilor de modele. Afirmațiile despre astfel de linii documentează existența unei practici, nu validitatea ei.
+Aceste studii modifică forma întregii cereri sau a instrucțiunii, nu adaugă o linie separată de tip „mod”. Nu am găsit un test al unei linii-comandă de tip „mod” comparate cu un placebo. Pentru sintaxa testată nu am găsit nici o documentație publică din partea furnizorilor de modele. Afirmațiile despre astfel de linii documentează existența unei practici, nu validitatea ei.
 
 Consecința pentru designul experimentului este directă: o diferență între linia testată și lipsa oricărei instrucțiuni, luată singură, poate reflecta doar sensibilitatea obișnuită la formă. Numai o diferență față de un placebo cu aceeași formă ar indica ceva specific liniei testate.
 
@@ -76,7 +76,7 @@ Fiecare cerere a fost trimisă într-o conversație nouă, fără instrucțiuni 
 | C | `Răspunde cât mai creativ.` | Aceeași intenție, în cuvinte obișnuite |
 | D | `//Zq_Rt_Op_Mode --creative` | Placebo: aceeași formă și același cuvânt, cu un „mod” inventat |
 
-Logica designului este următoarea. Dacă B activează un mod real, B trebuie să difere de D. Dacă B și D se comportă la fel, efectul nu poate fi atribuit numelui „Dev\_Lab\_Op\_Mode”. Dacă B nu întrece C, forma de comandă nu aduce nimic în plus față de limbajul obișnuit.
+Logica designului este următoarea. Dacă B activează un mod real, B trebuie să difere de D. Dacă nu se detectează o diferență între B și D, nu există o dovadă că efectul ar ține de numele „Dev\_Lab\_Op\_Mode”. Dacă B nu întrece C, nu există o dovadă că forma de comandă aduce un avantaj față de limbajul obișnuit.
 
 \Needspace{6\baselineskip}
 
@@ -154,9 +154,9 @@ Fiecare comparație primește unul dintre patru rezultate: **B mai bun** (p ajus
 
 ### 3.7 Preînregistrare și audit
 
-Protocolul, codul, prompturile și regulile de decizie au fost salvate în repozitoriul Git al studiului și marcate cu eticheta `preinregistrare-v1` (commit d313317). Versiunea publicată cu această etichetă datează din 22 noiembrie 2026, ora 18:10 UTC; prima rulare a experimentului a început la 18:13 UTC. O rulare pilot, cu câte un răspuns pe combinație și alte seed-uri, a servit doar la verificarea funcționării. Datele ei sunt păstrate separat și nu intră în analiză.
+Protocolul, codul, prompturile și regulile de decizie au fost salvate în repozitoriul Git al studiului și marcate cu eticheta `preinregistrare-v1` (commit d313317). Versiunea publicată cu această etichetă datează din 22 noiembrie 2026, ora 18:10 UTC; prima rulare a experimentului a început la 18:13 UTC. Repozitoriul era atunci privat și a devenit public după încheierea studiului. Eticheta, commit-ul și data release-ului, înregistrată de GitHub, permit inspectarea versiunii declarate ca preînregistrată, dar nu constituie o dovadă externă și independentă a cronologiei, cum ar fi o înregistrare publică pe o platformă de preînregistrare. Preînregistrarea reduce riscul ajustării concluziilor după rezultate și face analiza trasabilă, fără să îl poată elimina complet. O rulare pilot, cu câte un răspuns pe combinație și alte seed-uri, a servit doar la verificarea funcționării. Datele ei sunt păstrate separat și nu intră în analiză.
 
-Înainte de etichetare, protocolul și codul au trecut printr-un audit extern într-o singură rundă, făcut de un alt sistem AI (Codex, OpenAI), cu reguli de oprire fixate dinainte. Auditul a identificat nouă observații blocante, toate corectate înainte de etichetare: printre altele, testul pe perechi, tratarea contrastelor neestimabile, parsarea strictă a notelor și reguli explicite de extragere a numelor. Nu a urmat o a doua rundă de audit. Analiza a fost rulată o singură dată, după încheierea colectării tuturor datelor, fără nicio examinare intermediară a rezultatelor primare.
+Înainte de etichetare, protocolul și codul au trecut printr-un audit extern într-o singură rundă, făcut de un alt sistem AI (Codex, OpenAI), cu reguli de oprire fixate dinainte. Auditul a identificat nouă observații blocante, toate corectate înainte de etichetare: printre altele, testul pe perechi, tratarea contrastelor neestimabile, parsarea strictă a notelor și reguli explicite de extragere a numelor. Nu a urmat o a doua rundă de audit. Analiza statistică a început după încheierea colectării tuturor datelor, fără nicio examinare intermediară a rezultatelor primare. Prima rulare a folosit o versiune incompletă a scriptului de analiză; analiza finală a fost repetată cu versiunea preînregistrată, iar rezultatele primare și verdictul au rămas identice (secțiunea 7).
 
 \clearpage
 
@@ -183,25 +183,25 @@ Tabelele 4 și 5 prezintă rezultatele pe fiecare model și condiție.
 | Model | Cond. | Diversitatea numelor (P1) | Răspunsuri cu exact 5 nume | Originalitate T1 |
 |:----------|:--:|------:|------:|------:|
 | Gemma 4 E4B | A | 0,930 | 20/20 | 3,05 |
-|  | B | 0,940 | 20/20 | 3,35 |
-|  | C | 0,970 | 20/20 | 3,92 |
-|  | D | 0,960 | 20/20 | 3,10 |
+| Gemma 4 E4B | B | 0,940 | 20/20 | 3,35 |
+| Gemma 4 E4B | C | 0,970 | 20/20 | 3,92 |
+| Gemma 4 E4B | D | 0,960 | 20/20 | 3,10 |
 | Qwen3 4B | A | 0,880 | 20/20 | 3,73 |
-|  | B | 0,850 | 20/20 | 3,42 |
-|  | C | 0,930 | 20/20 | 3,75 |
-|  | D | 0,910 | 20/20 | 3,30 |
+| Qwen3 4B | B | 0,850 | 20/20 | 3,42 |
+| Qwen3 4B | C | 0,930 | 20/20 | 3,75 |
+| Qwen3 4B | D | 0,910 | 20/20 | 3,30 |
 | Ministral 3 8B | A | 0,980 | 20/20 | 3,35 |
-|  | B | 0,990 | 20/20 | 3,38 |
-|  | C | 1,000 | 20/20 | 3,80 |
-|  | D | 1,000 | 20/20 | 3,27 |
+| Ministral 3 8B | B | 0,990 | 20/20 | 3,38 |
+| Ministral 3 8B | C | 1,000 | 20/20 | 3,80 |
+| Ministral 3 8B | D | 1,000 | 20/20 | 3,27 |
 | Granite 4.1 8B | A | 0,950 | 20/20 | 3,30 |
-|  | B | 0,900 | 20/20 | 2,83 |
-|  | C | 0,980 | 20/20 | 3,52 |
-|  | D | 0,970 | 20/20 | 3,30 |
+| Granite 4.1 8B | B | 0,900 | 20/20 | 2,83 |
+| Granite 4.1 8B | C | 0,980 | 20/20 | 3,52 |
+| Granite 4.1 8B | D | 0,970 | 20/20 | 3,30 |
 | Phi-4 mini | A | 0,952 | 19/20 | 2,12 |
-|  | B | 1,000 | 14/20 | 2,90 |
-|  | C | 1,000 | 19/20 | 3,38 |
-|  | D | 0,983 | 16/20 | 3,00 |
+| Phi-4 mini | B | 1,000 | 14/20 | 2,90 |
+| Phi-4 mini | C | 1,000 | 19/20 | 3,38 |
+| Phi-4 mini | D | 0,983 | 16/20 | 3,00 |
 
 \Needspace{14\baselineskip}
 
@@ -210,25 +210,25 @@ Tabelele 4 și 5 prezintă rezultatele pe fiecare model și condiție.
 | Model | Cond. | Originalitate (P2) | Distinct-2 | Lungime medie (cuvinte) | Trunchiate |
 |:----------|:--:|------:|------:|------:|------:|
 | Gemma 4 E4B | A | 3,20 | 0,800 | 107,9 | 0 |
-|  | B | 3,40 | 0,802 | 98,5 | 0 |
-|  | C | 3,80 | 0,828 | 104,3 | 0 |
-|  | D | 3,35 | 0,798 | 98,3 | 0 |
+| Gemma 4 E4B | B | 3,40 | 0,802 | 98,5 | 0 |
+| Gemma 4 E4B | C | 3,80 | 0,828 | 104,3 | 0 |
+| Gemma 4 E4B | D | 3,35 | 0,798 | 98,3 | 0 |
 | Qwen3 4B | A | 3,40 | 0,737 | 120,5 | 0 |
-|  | B | 3,88 | 0,736 | 112,0 | 0 |
-|  | C | 4,12 | 0,743 | 122,2 | 0 |
-|  | D | 3,83 | 0,745 | 114,8 | 0 |
+| Qwen3 4B | B | 3,88 | 0,736 | 112,0 | 0 |
+| Qwen3 4B | C | 4,12 | 0,743 | 122,2 | 0 |
+| Qwen3 4B | D | 3,83 | 0,745 | 114,8 | 0 |
 | Ministral 3 8B | A | 3,17 | 0,826 | 125,5 | 0 |
-|  | B | 3,58 | 0,835 | 141,7 | 0 |
-|  | C | 4,03 | 0,834 | 146,7 | 0 |
-|  | D | 3,62 | 0,831 | 137,1 | 0 |
+| Ministral 3 8B | B | 3,58 | 0,835 | 141,7 | 0 |
+| Ministral 3 8B | C | 4,03 | 0,834 | 146,7 | 0 |
+| Ministral 3 8B | D | 3,62 | 0,831 | 137,1 | 0 |
 | Granite 4.1 8B | A | 2,33 | 0,826 | 82,6 | 0 |
-|  | B | 2,52 | 0,820 | 107,3 | 0 |
-|  | C | 2,38 | 0,846 | 97,1 | 0 |
-|  | D | 2,23 | 0,836 | 85,7 | 0 |
+| Granite 4.1 8B | B | 2,52 | 0,820 | 107,3 | 0 |
+| Granite 4.1 8B | C | 2,38 | 0,846 | 97,1 | 0 |
+| Granite 4.1 8B | D | 2,23 | 0,836 | 85,7 | 0 |
 | Phi-4 mini | A | 1,20 | 0,584 | 584,1 | 9 |
-|  | B | 2,15 | 0,791 | 256,8 | 1 |
-|  | C | 2,48 | 0,777 | 283,8 | 0 |
-|  | D | 1,93 | 0,718 | 297,5 | 1 |
+| Phi-4 mini | B | 2,15 | 0,791 | 256,8 | 1 |
+| Phi-4 mini | C | 2,48 | 0,777 | 283,8 | 0 |
+| Phi-4 mini | D | 1,93 | 0,718 | 297,5 | 1 |
 
 Media peste modele a scorului de originalitate la T2 a fost 2,66 în condiția A, 3,11 în B, 3,36 în C și 2,99 în D. Pentru diversitatea numelor, valorile corespunzătoare au fost 0,938, 0,936, 0,976 și 0,965. Diversitatea numelor a fost aproape de valoarea maximă, 1, la majoritatea modelelor și condițiilor, ceea ce lasă puțin loc pentru diferențe la P1.
 
@@ -253,13 +253,25 @@ Tabelul 6 prezintă cele șase comparații preînregistrate, pe toate modelele c
 
 *Notă.* Diferența este media, peste cele cinci modele, a diferenței medii pe perechi din fiecare model. Valoarea p = 0,0001 este cea mai mică posibilă cu 10.000 de permutări. Nicio comparație nu a fost neestimabilă și nicio pereche nu a fost incompletă.
 
-Linia testată a obținut un scor de originalitate mai mare decât lipsa oricărei instrucțiuni, dar nu s-a deosebit de placebo-ul D la niciunul dintre rezultatele primare. Față de instrucțiunea obișnuită C, linia testată a avut rezultate mai slabe la ambele rezultate primare.
+Figura 1 prezintă aceleași diferențe pentru originalitate (P2), cu intervalele lor de încredere.
+
+\Needspace{16\baselineskip}
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura1.pdf}
+\end{center}
+
+```{=latex}
+\noindent\textbf{Figura 1. Diferențele de originalitate (P2) dintre linia testată și fiecare comparator.} {\small Pătratul arată diferența medie (B minus comparator), iar segmentul, intervalul de încredere 95\% obținut prin bootstrap, neajustat pentru comparații multiple. Valorile pozitive favorizează linia testată. Deciziile primare folosesc valorile p ajustate Holm.\par}
+```
+
+Linia testată a obținut un scor de originalitate mai mare decât lipsa oricărei instrucțiuni, dar față de placebo-ul D nu s-a detectat nicio diferență semnificativă statistic la niciunul dintre rezultatele primare. Față de instrucțiunea obișnuită C, linia testată a avut rezultate mai slabe la ambele rezultate primare.
 
 \Needspace{6\baselineskip}
 
 ### 4.4 Verdictul preînregistrat
 
-Criteriul de susținere cerea ca, la același rezultat primar, B să fie mai bun atât decât C, cât și decât D. Criteriul nu a fost îndeplinit la niciunul dintre rezultate: față de D nu s-a detectat nicio diferență, iar față de C linia testată a fost mai slabă. Conform regulilor din Tabelul 3, **afirmația nu este susținută de acest experiment.**
+Criteriul de susținere cerea ca, la același rezultat primar, B să fie mai bun atât decât C, cât și decât D. Criteriul nu a fost îndeplinit la niciunul dintre rezultate: față de D nu s-a detectat nicio diferență semnificativă, iar față de C linia testată a fost mai slabă. Conform regulilor din Tabelul 3, **afirmația nu este susținută de acest experiment.**
 
 Verdictul opus ar fi necesitat ca B să depășească semnificativ, după corecția Holm, atât C, cât și D la același rezultat primar, fără să fie mai slab la vreo comparație. Rezultatele sunt departe de această situație: la P2, diferența față de C are semnul opus celui cerut, iar intervalul ei de încredere nu include zero.
 
@@ -297,7 +309,7 @@ Tabelul 7 arată, pentru fiecare comparație, la câte modele diferența a mers 
 
 *Notă.* Valorile marcate cu aldin au p ajustat < 0,05 în testul modelului respectiv.
 
-Avantajul liniei testate față de condiția A la originalitate are aceeași direcție la toate cele cinci modele. Nu se datorează, așadar, doar modelului Phi-4 mini, la care condiția A a produs cele mai multe bucle și cele mai slabe scoruri. La niciun model linia testată nu s-a deosebit semnificativ de placebo.
+Avantajul liniei testate față de condiția A la originalitate are aceeași direcție la toate cele cinci modele. Nu se datorează, așadar, doar modelului Phi-4 mini, la care condiția A a produs cele mai multe bucle și cele mai slabe scoruri. La niciun model nu s-a detectat o diferență semnificativă între linia testată și placebo.
 
 \Needspace{6\baselineskip}
 
@@ -315,7 +327,7 @@ Tabelul 9 repetă comparațiile pentru originalitate cu fiecare evaluator separa
 | Doar Qwen3.5 9B | +0,260 (p = 0,002) | −0,050 (p = 0,619) | +0,170 (p = 0,019) |
 | Doar Gemma 4 12B | +0,630 (p < 0,001) | −0,460 (p < 0,001) | +0,060 (p = 0,613) |
 
-Cei doi evaluatori sunt de acord asupra direcției față de condiția A, dar nu și asupra celorlalte contraste. Diferența față de C provine aproape în întregime din notele evaluatorului Gemma 4 12B, iar notele evaluatorului Qwen3.5 9B arată o diferență față de placebo care ar fi semnificativă fără corecție (p = 0,019). Niciunul dintre evaluatori luat separat nu ar fi îndeplinit criteriul de susținere, care cere superioritate simultană față de C și D.
+Cei doi evaluatori indică aceeași direcție la toate cele trei contraste, dar diferă ca mărime a efectului și ca semnificație nominală. Diferența față de C este mult mai mare în notele evaluatorului Gemma 4 12B decât în cele ale evaluatorului Qwen3.5 9B, iar notele evaluatorului Qwen3.5 9B arată o diferență față de placebo care ar fi semnificativă fără corecție (p = 0,019). Niciunul dintre evaluatori luat separat nu ar fi îndeplinit criteriul de susținere, care cere superioritate simultană față de C și D.
 
 \Needspace{6\baselineskip}
 
@@ -334,7 +346,25 @@ Dintre cele cinci modele, doar Gemma 4 E4B a produs raționament intern (Tabelul
 | C | 40/40 | 562 |
 | D | 39/40 | 547 |
 
-Prin urmare, orice linie adăugată înaintea cererii, fie comanda testată, placebo-ul sau propoziția obișnuită, a crescut frecvența raționamentului. Linia testată nu s-a deosebit de celelalte două. Rezultatul este secundar, descriptiv și limitat la un singur model.
+Prin urmare, orice linie adăugată înaintea cererii, fie comanda testată, placebo-ul sau propoziția obișnuită, a crescut frecvența raționamentului. Valorile pentru linia testată au fost apropiate de cele ale celorlalte două prefixe; pentru acest rezultat nu s-a făcut un test statistic. Rezultatul este secundar, descriptiv și limitat la un singur model.
+
+\Needspace{6\baselineskip}
+
+### 4.8 Analiză exploratorie: originalitatea fără Phi-4 mini
+
+Toate cele 11 răspunsuri trunchiate provin de la Phi-4 mini, iar nouă dintre ele sunt în condiția A, ceea ce ar putea amplifica diferența B–A. Pentru a verifica dacă rezultatele pentru originalitate depind de acest model, comparațiile P2 au fost refăcute fără el, pe celelalte 80 de perechi. Semnificația a fost calculată exact, prin toate schimbările de semn posibile ale diferențelor din perechi. Această analiză a fost decisă după vederea rezultatelor, nu a fost preînregistrată și nu modifică verdictul (Tabelul 11).
+
+\Needspace{8\baselineskip}
+
+**Tabelul 11. Originalitatea (P2) cu și fără Phi-4 mini (analiză exploratorie)**
+
+| Comparație | Toate modelele (100 de perechi) | Fără Phi-4 mini (80 de perechi) | p exact, neajustat |
+|:----------|:------:|:------:|:------:|
+| B vs A | +0,445 | +0,319 | < 0,0001 |
+| B vs C | −0,255 | −0,238 | 0,0012 |
+| B vs D | +0,115 | +0,088 | 0,245 |
+
+Direcția și semnificația celor trei comparații rămân aceleași fără Phi-4 mini: avantajul față de A se reduce, dar rămâne clar, dezavantajul față de C se păstrează, iar față de placebo nu se detectează nicio diferență semnificativă. Analiza a fost făcută și independent, de un al doilea asistent AI (ChatGPT), cu aceleași cifre. Pentru diversitatea numelor (P1) nu s-a făcut o analiză similară.
 
 \clearpage
 
@@ -344,17 +374,17 @@ Prin urmare, orice linie adăugată înaintea cererii, fie comanda testată, pla
 
 ### 5.1 Ce arată rezultatele
 
-Pe modelele testate, linia `//Dev_Lab_Op_Mode --creative` a avut un efect măsurabil față de lipsa oricărei instrucțiuni: paragrafele au fost notate, în medie, cu aproape jumătate de punct mai originale, la toate cele cinci modele. Efectul nu a fost însă specific liniei. O linie cu aceeași formă și un nume inventat a produs rezultate care nu s-au deosebit de ale ei, iar o propoziție obișnuită în română a fost mai eficientă la ambele rezultate primare. Datele nu arată, așadar, nimic care să corespundă unui „mod” activat de numele „Dev\_Lab\_Op\_Mode”.
+Pe modelele testate, linia `//Dev_Lab_Op_Mode --creative` a avut un efect măsurabil față de lipsa oricărei instrucțiuni: paragrafele au fost notate, în medie, cu aproape jumătate de punct mai originale, la toate cele cinci modele. Datele nu arată însă un avantaj specific al liniei. Față de o linie cu aceeași formă și un nume inventat nu s-a detectat o diferență semnificativă, iar o propoziție obișnuită în română a fost mai eficientă la ambele rezultate primare, în analiza combinată. Datele nu oferă, așadar, o dovadă a unui „mod” activat de numele „Dev\_Lab\_Op\_Mode”.
 
-Rezultatul este compatibil cu ce se știe din literatură: modelele reacționează la conținutul și forma promptului. O cerere precedată de cuvântul „creative” sau de o instrucțiune explicită de creativitate primește, în medie, răspunsuri notate ca mai originale. Studiul nu a găsit un avantaj al formei de comandă față de limbajul obișnuit; a găsit, dimpotrivă, un dezavantaj.
+Rezultatul este compatibil cu ce se știe din literatură: modelele reacționează la conținutul și forma promptului. O cerere precedată de cuvântul „creative” sau de o instrucțiune explicită de creativitate primește, în medie, răspunsuri notate ca mai originale. Studiul nu a găsit un avantaj al formei de comandă față de limbajul obișnuit; în analiza combinată, linia testată a obținut rezultate mai slabe decât propoziția obișnuită.
 
 \Needspace{6\baselineskip}
 
 ### 5.2 Ce nu arată rezultatele
 
-Placebo-ul D conține și el cuvântul „creative” și are aceeași formă de comandă. Contrastul B–D arată doar că numele „Dev\_Lab\_Op\_Mode” nu a adus nimic în plus față de un nume inventat. Experimentul nu poate separa efectul cuvântului „creative” de cel al formei de comandă și nu poate atribui efectul observat față de A unui mecanism anume.
+Placebo-ul D conține și el cuvântul „creative” și are aceeași formă de comandă. Contrastul B–D nu a evidențiat un avantaj semnificativ statistic al liniei testate față de linia placebo. Acest rezultat nu demonstrează echivalența celor două condiții și nu exclude existența unor diferențe mici. Experimentul nu poate separa efectul cuvântului „creative” de cel al formei de comandă și nu poate atribui efectul observat față de A unui mecanism anume.
 
-„Nicio diferență detectată” nu înseamnă că diferența este zero. Pentru originalitate, intervalul de încredere al diferenței B–D, de la −0,015 la +0,245, nu exclude un avantaj mic al liniei testate față de placebo. Un astfel de avantaj ar rămâne însă mai mic decât dezavantajul față de instrucțiunea obișnuită, al cărui interval de încredere este în întregime negativ.
+„Nicio diferență detectată” nu înseamnă că diferența este zero. Pentru originalitate, intervalul de încredere al diferenței B–D, de la −0,015 la +0,245, nu exclude un avantaj mic al liniei testate față de placebo. Pe de altă parte, nici un contrast B–D semnificativ nu ar fi demonstrat singur existența unui mod intern: ar fi indicat doar o diferență de comportament între cele două texte testate. Experimentul măsoară efecte comportamentale, nu mecanisme interne.
 
 \Needspace{6\baselineskip}
 
@@ -364,9 +394,9 @@ Placebo-ul D conține și el cuvântul „creative” și are aceeași formă de
 
 **Buclele modelului Phi-4 mini.** În condiția A, acest model a intrat de nouă ori într-o buclă repetitivă, cu răspunsuri lungi și note foarte mici. Orice linie adăugată a redus frecvența buclelor. Efectul față de A este cel mai mare la acest model (+0,95), dar apare, cu aceeași direcție, la toate celelalte modele.
 
-**Evaluatorii automați.** Acordul dintre cei doi evaluatori a fost doar moderat (r = 0,48), iar analizele de sensibilitate arată că direcția unor contraste depinde de evaluator. Fiecare evaluator aparține aceleiași familii ca unul dintre generatoare, ceea ce poate crea o preferință pentru textele „propriei” familii. O astfel de preferință ar afecta însă la fel toate cele patru condiții ale aceluiași model. Notele automate nu au fost validate față de evaluatori umani. Rezultatul P1, diversitatea numelor, nu depinde de niciun evaluator și conduce la aceeași concluzie: linia testată nu a întrecut nici placebo-ul, nici instrucțiunea obișnuită.
+**Evaluatorii automați.** Acordul dintre cei doi evaluatori a fost doar moderat (r = 0,48), iar notele coincid exact în 50% din cazuri; analizele de sensibilitate arată că mărimea și semnificația unor contraste depind de evaluator. Fiecare evaluator aparține aceleiași familii ca unul dintre generatoare, ceea ce poate crea o preferință pentru textele „propriei” familii. Evaluarea oarbă și comparațiile în interiorul aceluiași model reduc unele surse de distorsiune, dar nu exclud interacțiunea dintre preferințele evaluatorilor, familia generatorului și stilul răspunsurilor produse în diferite condiții. Notele automate nu au fost validate față de evaluatori umani, iar scorul P2 este o măsură operațională a originalității, nu o măsurare completă sau directă a creativității. Rezultatul P1, diversitatea numelor, nu depinde de niciun evaluator și conduce la aceeași concluzie: linia testată nu a întrecut nici placebo-ul, nici instrucțiunea obișnuită.
 
-**Efectul de plafon la P1.** Diversitatea numelor a fost aproape maximă la majoritatea modelelor, astfel încât P1 a avut puțin loc să arate o îmbunătățire. Faptul că instrucțiunea obișnuită C a depășit totuși linia testată la acest rezultat arată că măsura nu a fost complet insensibilă.
+**Efectul de plafon la P1.** Diversitatea numelor a fost aproape maximă la majoritatea modelelor, astfel încât P1 a avut puțin loc să arate o îmbunătățire. Faptul că instrucțiunea obișnuită C a depășit totuși linia testată la acest rezultat arată că măsura nu a fost complet insensibilă. În plus, proporția numelor unice depinde de numărul total de nume extrase, iar Phi-4 mini nu a respectat uniform cerința de a da exact cinci nume (Tabelul 4). P1 măsoară varietatea numelor, nu calitatea sau creativitatea lor în sens complet.
 
 \Needspace{6\baselineskip}
 
@@ -381,7 +411,7 @@ Pentru utilizatorul care vrea răspunsuri mai creative de la un model asemănăt
 - **Modele.** Au fost testate cinci modele mici (4–8 miliarde de parametri), rulate local. Efectele de formă diferă de la un model la altul (Sclar et al., 2024), iar rezultatul nu se transferă automat la modele mari sau la servicii online.
 - **Domeniul afirmației.** Testul acoperă doar linia dată ca exemplu public, aplicată unor modele fără nicio configurare care să o definească. El nu exclude ca linia să aibă un efect într-o aplicație sau într-un set de instrucțiuni care o definește.
 - **Măsurarea creativității.** Creativitatea a fost măsurată indirect, prin diversitatea numelor și prin note de originalitate date de modele de limbaj. Aceste note au propriile preferințe și nu au fost validate față de evaluatori umani.
-- **Sarcini și limbă.** Au fost folosite doar două sarcini, în limba română, pe care unele modele mici o stăpânesc mai slab. Comparațiile se fac însă în interiorul aceluiași model, deci limba afectează la fel toate condițiile.
+- **Sarcini și limbă.** Au fost folosite doar două sarcini, în limba română, pe care unele modele mici o stăpânesc mai slab. Comparațiile în interiorul aceluiași model reduc diferențele dintre modele în stăpânirea limbii, dar nu garantează că limba afectează identic toate condițiile: prefixele B și D conțin un cuvânt englezesc, iar C este în română.
 - **Setări.** S-a folosit o singură configurație de generare (temperatură 0,8). Efectul liniei poate fi diferit la alte temperaturi.
 - **Puterea statistică.** Douăzeci de repetiții pe celulă permit, pe un model luat separat, detectarea doar a efectelor moderate sau mari. Analiza combinată are mai multă putere, dar nu exclude efecte mici.
 - **Mecanism.** Experimentul compară patru texte și nu poate atribui un efect unui mecanism intern.
@@ -401,13 +431,13 @@ Pentru utilizatorul care vrea răspunsuri mai creative de la un model asemănăt
 
 ## 8. Transparență, reproducere și rolul instrumentelor AI
 
-Repozitoriul studiului (<https://github.com/ovidiuboticiu/test-sintaxa-prompt>) conține protocolul preînregistrat, codul, prompturile, identificarea exactă a modelelor, raportul auditului, datele pilot, toate cele 800 de răspunsuri brute, cele 1.600 de note ale evaluatorilor și raportul generat automat de analiză. Eticheta `preinregistrare-v1` permite verificarea faptului că protocolul a precedat datele. Experimentul poate fi repetat pe Windows, Linux sau macOS, cu LM Studio și Python 3.10 sau mai nou, urmând instrucțiunile din fișierul README. Analiza poate fi refăcută din datele publicate cu o singură comandă.
+Repozitoriul studiului (<https://github.com/ovidiuboticiu/test-sintaxa-prompt>) conține protocolul preînregistrat, codul, prompturile, identificarea exactă a modelelor, raportul auditului, datele pilot, toate cele 800 de răspunsuri brute, cele 1.600 de note ale evaluatorilor și raportul generat automat de analiză. Eticheta `preinregistrare-v1` permite inspectarea versiunii protocolului fixate înaintea colectării datelor, cu limitele descrise în secțiunea 3.7. Experimentul poate fi repetat pe Windows, Linux sau macOS, cu LM Studio și Python 3.10 sau mai nou, urmând instrucțiunile din fișierul README. Analiza poate fi refăcută din datele publicate cu o singură comandă.
 
-Tabelul 11 rezumă calendarul studiului, pentru cine vrea să estimeze timpul necesar unei repetări. Toate rulările s-au făcut pe un laptop personal cu Windows (procesor AMD Ryzen 7 5825U, 32 GB RAM, grafică integrată, fără placă video dedicată). Duratele evaluării sunt aproximative, deoarece fișierele de evaluare nu înregistrează ora fiecărei note.
+Tabelul 12 rezumă calendarul studiului, pentru cine vrea să estimeze timpul necesar unei repetări. Toate rulările s-au făcut pe un laptop personal cu Windows (procesor AMD Ryzen 7 5825U, 32 GB RAM, grafică integrată, fără placă video dedicată). Duratele evaluării sunt aproximative, deoarece fișierele de evaluare nu înregistrează ora fiecărei note.
 
 \Needspace{12\baselineskip}
 
-**Tabelul 11. Calendarul studiului**
+**Tabelul 12. Calendarul studiului**
 
 | Etapă | Data | Durată |
 |:---------------------------|:-------------------|:----------------------|
@@ -425,7 +455,7 @@ Cercetarea a fost realizată de autor, cu asistența unor instrumente AI. Între
 
 ## 9. Concluzie
 
-Testul preînregistrat nu susține afirmația că linia `//Dev_Lab_Op_Mode --creative` activează un mod creativ distinct. Pe cinci modele locale din familii diferite, linia a îmbunătățit notele de originalitate față de lipsa oricărei instrucțiuni. O linie inventată cu aceeași formă nu s-a deosebit însă de ea, iar instrucțiunea obișnuită „Răspunde cât mai creativ.” a dat rezultate mai bune atât la diversitatea numelor, cât și la originalitatea textului. Rezultatul este limitat la modelele, sarcinile și setările testate, dar metoda și datele sunt publice și pot fi aplicate oricărei alte „sintaxe” sau oricărui alt model.
+Testul preînregistrat nu susține afirmația că linia `//Dev_Lab_Op_Mode --creative` activează un mod creativ distinct. Pe cinci modele locale din familii diferite, linia a îmbunătățit notele de originalitate față de lipsa oricărei instrucțiuni. Față de o linie inventată cu aceeași formă nu s-a detectat însă o diferență semnificativă, iar instrucțiunea obișnuită „Răspunde cât mai creativ.” a dat rezultate mai bune atât la diversitatea numelor, cât și la originalitatea textului. Rezultatul este limitat la modelele, sarcinile și setările testate, dar metoda și datele sunt publice și pot fi aplicate oricărei alte „sintaxe” sau oricărui alt model.
 
 \Needspace{6\baselineskip}
 
@@ -433,13 +463,13 @@ Testul preînregistrat nu susține afirmația că linia `//Dev_Lab_Op_Mode --cre
 
 \noindent\hangindent=1.27cm Efron, B., & Tibshirani, R. J. (1993). *An Introduction to the Bootstrap*. Chapman & Hall/CRC.
 
-\noindent\hangindent=1.27cm He, J., et al. (2024). Does Prompt Formatting Have Any Impact on LLM Performance? *arXiv preprint* arXiv:2411.10541.
+\noindent\hangindent=1.27cm He, J., Rungta, M., Koleczek, D., Sekhon, A., Wang, F. X., & Hasan, S. (2024). Does Prompt Formatting Have Any Impact on LLM Performance? *arXiv preprint* [arXiv:2411.10541](https://arxiv.org/abs/2411.10541).
 
 \noindent\hangindent=1.27cm Holm, S. (1979). A simple sequentially rejective multiple test procedure. *Scandinavian Journal of Statistics*, 6(2), 65–70.
 
-\noindent\hangindent=1.27cm Mishra, M., et al. (2023). Prompting with Pseudo-Code Instructions. În *Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP 2023)*. arXiv:2305.11790.
+\noindent\hangindent=1.27cm Mishra, M., Kumar, P., Bhat, R., Murthy, R., Contractor, D., & Tamilselvam, S. (2023). Prompting with Pseudo-Code Instructions. În *Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing* (pp. 15178–15197). Association for Computational Linguistics. [doi:10.18653/v1/2023.emnlp-main.939](https://doi.org/10.18653/v1/2023.emnlp-main.939)
 
-\noindent\hangindent=1.27cm Sclar, M., et al. (2024). Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design or: How I learned to start worrying about prompt formatting. În *The Twelfth International Conference on Learning Representations (ICLR 2024)*. arXiv:2310.11324.
+\noindent\hangindent=1.27cm Sclar, M., Choi, Y., Tsvetkov, Y., & Suhr, A. (2024). Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design or: How I learned to start worrying about prompt formatting. În *The Twelfth International Conference on Learning Representations (ICLR 2024)*. [arXiv:2310.11324](https://arxiv.org/abs/2310.11324)
 
 \clearpage
 

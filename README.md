@@ -12,9 +12,9 @@ Experimentul compară patru variante ale aceleiași cereri: fără nimic, cu sin
 
 ## Rezultat
 
-**Afirmația nu e susținută de acest experiment** (regulile preînregistrate din PROTOCOL.md §8). Față de lipsa oricărei instrucțiuni, linia a crescut notele de originalitate ale paragrafelor (+0,45 pe o scală 1–5, la toate cele 5 modele). O linie placebo de aceeași formă, cu un „mod” inventat, nu s-a deosebit însă de ea, iar instrucțiunea obișnuită „Răspunde cât mai creativ.” a dat rezultate mai bune atât la diversitatea numelor, cât și la originalitate.
+**Afirmația nu e susținută de acest experiment** (regulile preînregistrate din PROTOCOL.md §8). Față de lipsa oricărei instrucțiuni, linia a crescut notele de originalitate ale paragrafelor (+0,45 pe o scală 1–5, la toate cele 5 modele). Față de o linie placebo de aceeași formă, cu un „mod” inventat, nu s-a detectat însă o diferență semnificativă statistic (ceea ce nu dovedește că cele două sunt echivalente), iar instrucțiunea obișnuită „Răspunde cât mai creativ.” a dat rezultate mai bune atât la diversitatea numelor, cât și la originalitate.
 
-- Raportul științific: **[raport/raport_test_sintaxa_prompt.pdf](raport/raport_test_sintaxa_prompt.pdf)**
+- Raportul științific: **[raport/raport_test_sintaxa_prompt.pdf](raport/raport_test_sintaxa_prompt.pdf)** (versiunea 1.0.1, revizuită editorial; vezi `RELEASE_NOTES_v1.0.1.md`)
 - Raportul generat automat de analiză, cu abaterile de la protocol: [results/raport.md](results/raport.md)
 
 ## Ce testează și ce nu testează
@@ -29,7 +29,7 @@ Afirmații despre linii de tip comandă care ar activa „moduri” speciale ale
 
 ## De ce „preînregistrat”
 
-Ipotezele, măsurătorile, testele statistice și regulile de interpretare au fost scrise **înainte** de a colecta datele și salvate în commit-ul cu eticheta `preinregistrare-v1`. Astfel, nimeni (nici autorul) nu poate potrivi concluziile după rezultate. Regulile sunt simetrice: un rezultat favorabil și unul nefavorabil sunt tratate cu același prag.
+Ipotezele, măsurătorile, testele statistice și regulile de interpretare au fost scrise **înainte** de a colecta datele și salvate în commit-ul cu eticheta `preinregistrare-v1`. Asta reduce riscul ca concluziile să fie potrivite după rezultate și face analiza trasabilă. Limită: repozitoriul era privat la momentul preînregistrării și a devenit public după încheierea studiului, așa că eticheta și data release-ului permit inspectarea versiunii declarate, dar nu sunt o dovadă externă, independentă, a cronologiei. Regulile sunt simetrice: un rezultat favorabil și unul nefavorabil sunt tratate cu același prag.
 
 Verificare:
 
@@ -57,7 +57,7 @@ git show preinregistrare-v1 --stat
 | `data/` | Datele brute: 800 de răspunsuri, 1.600 de note ale evaluatorilor, datele pilot |
 | `results/` | Raportul generat automat de analiză (`raport.md`, `rezumat.json`) |
 | `raport/` | Raportul științific (PDF și sursa Markdown) și fișierele de construire |
-| `RELEASE_NOTES_v1.0.0.md` | Ce conține versiunea publică 1.0.0 |
+| `RELEASE_NOTES_v1.0.0.md`, `RELEASE_NOTES_v1.0.1.md` | Ce conține fiecare versiune publică |
 | `CITATION.cff`, `LICENSES.md` | Citare și licențe |
 | `SHA256SUMS.txt` | Sumele de control ale datelor și ale raportului |
 
