@@ -10,6 +10,13 @@ scrisă la începutul unei sesiuni noi, schimbă comportamentul unui model de li
 
 Experimentul compară patru variante ale aceleiași cereri: fără nimic, cu sintaxa testată, cu aceeași intenție scrisă în cuvinte și cu o sintaxă placebo (aceeași formă, dar un „mod” inventat). Testul se face pe cinci modele mici din familii diferite (Gemma, Qwen, Mistral, Granite, Phi), cu 800 de răspunsuri notate orb de doi evaluatori automați. Detaliile sunt în **[PROTOCOL.md](PROTOCOL.md)**.
 
+## Rezultat
+
+**Afirmația nu e susținută de acest experiment** (regulile preînregistrate din PROTOCOL.md §8). Față de lipsa oricărei instrucțiuni, linia a crescut notele de originalitate ale paragrafelor (+0,45 pe o scală 1–5, la toate cele 5 modele). O linie placebo de aceeași formă, cu un „mod” inventat, nu s-a deosebit însă de ea, iar instrucțiunea obișnuită „Răspunde cât mai creativ.” a dat rezultate mai bune atât la diversitatea numelor, cât și la originalitate.
+
+- Raportul științific: **[raport/raport_test_sintaxa_prompt.pdf](raport/raport_test_sintaxa_prompt.pdf)**
+- Raportul generat automat de analiză, cu abaterile de la protocol: [results/raport.md](results/raport.md)
+
 ## Ce testează și ce nu testează
 
 Experimentul verifică dacă linia `//Dev_Lab_Op_Mode --creative`, scrisă la începutul unei conversații, schimbă răspunsurile unor modele care nu au nicio configurare care să o definească, și dacă efectul diferă de cel al unei instrucțiuni obișnuite sau al unei linii placebo de aceeași formă.
@@ -47,8 +54,9 @@ git show preinregistrare-v1 --stat
 | `EVALUARE_UMANA.md` | Instrucțiuni pentru evaluatorii umani (opțional) |
 | `AUDIT.md` | Auditul pre-execuție: întrebări și reguli de oprire |
 | `AUDIT_RAPORT.md`, `AUDIT_RASPUNS.md` | Raportul auditorului și corecturile făcute |
-| `data/` | Datele brute (după experiment) |
-| `results/` | Raportul final (după experiment) |
+| `data/` | Datele brute: 800 de răspunsuri, 1.600 de note ale evaluatorilor, datele pilot |
+| `results/` | Raportul generat automat de analiză (`raport.md`, `rezumat.json`) |
+| `raport/` | Raportul științific (PDF și sursa Markdown) și fișierele de construire |
 
 Scripturile folosesc doar biblioteca standard Python (3.10 sau mai nou); nu trebuie instalat nimic în plus.
 
